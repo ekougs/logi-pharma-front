@@ -1,0 +1,9 @@
+<ul [ngClass]="{show: _viewState.visible, hide: !_viewState.visible}" class="suggest" [style.width]="_viewState.width">
+    <template ngFor #element [ngForOf]="_viewState.elements" #i="index">
+        <!-- IMPORTANT : do not use click or mouseup because of blur on input. they conflict with blur in Chrome -->
+        <li title="{{ represent(element) }}" [ngClass]="{highlighted:highlighted(element)}"
+            (mousedown)="select(element)" [style.width]="_viewState.width">
+            {{ represent(element) }}
+        </li>
+    </template>
+</ul>

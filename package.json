@@ -1,0 +1,59 @@
+{
+  "name": "logi-pharma-front",
+  "version": "0.0.1",
+  "description": "Our product GUI",
+  "main": "main.js",
+  "scripts": {
+    "tsc": "tsc",
+    "tsc:w": "tsc -w",
+    "build:css": "node-sass --output app app ; node-sass main.scss main.css",
+    "watch:scss": "nodemon -e scss -x \"npm run build:css\"",
+    "init:compil": "npm-run-all -p tsc build:css ",
+    "run:pharma-app": "electron ./main.js",
+    "start-all": "npm-run-all tsc:w watch:scss run:pharma-app",
+    "start": "npm run init:compil; ENV=DEV npm run start-all",
+    "start:prod": "npm run init:compil ; ENV=PROD npm run start-all",
+    "http-server:test": "node test-server.js",
+    "serve:test": "npm run init:compil ; npm-run-all -p tsc:w watch:scss http-server:test",
+    "daemon-http-server:test": "forever start test-server.js",
+    "protractor:local": "protractor e2e.protractor.conf.js",
+    "test": "npm run init:compil ; npm-run-all -p daemon-http-server:test protractor:local"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ekougs/logi-pharma-front"
+  },
+  "dependencies": {
+    "angular2": "2.0.0-beta.7",
+    "systemjs": "0.19.20",
+    "es6-promise": "^3.0.2",
+    "es6-shim": "^0.33.3",
+    "reflect-metadata": "0.1.2",
+    "rxjs": "5.0.0-beta.2",
+    "lodash": "^4.5.0",
+    "lodash-es": "^4.5.1",
+    "zone.js": "0.5.15",
+    "bootstrap": "3.3.6",
+    "bootstrap-sass": "3.3.6"
+  },
+  "keywords": [],
+  "author": "ekougs",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ekougs/logi-pharma-front/issues"
+  },
+  "homepage": "https://github.com/ekougs/logi-pharma-front#readme",
+  "devDependencies": {
+    "babel-cli": "6.5.1",
+    "browser-sync": "^2.11.1",
+    "concurrently": "^1.0.0",
+    "electron-prebuilt": "^0.36.0",
+    "forever": "^0.15.1",
+    "node-sass": "3.4.2",
+    "nodemon": "1.8.1",
+    "npm-run-all": "^1.5.1",
+    "protractor": "^3.1.1",
+    "typescript": "^1.7.5",
+    "typings": "^0.6.8"
+  }
+}
