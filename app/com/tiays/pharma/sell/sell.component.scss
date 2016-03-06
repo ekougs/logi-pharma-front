@@ -1,0 +1,10 @@
+$sell-component-margin: 1em;
+
+div.navbar-fixed-bottom {
+  margin-top: $sell-component-margin;
+  margin-bottom: $sell-component-margin;
+}
+
+.btn {
+  margin-right: $sell-component-margin;
+}

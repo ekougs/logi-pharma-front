@@ -1,0 +1,45 @@
+@import "../../../../../mixins";
+@import "../../../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+@mixin highlighted() {
+  background-color: #3A5FCD;
+  color: white;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.suggest {
+  z-index: 1;
+  @include border-bottom-radius(2px);
+  @include border-top-right-radius(2px);
+  border: 1px solid #CCC;
+  background-color: #FFF;
+  color: #333;
+  list-style: none;
+  outline: none;
+  padding: 2px;
+  margin: 0;
+  cursor: default;
+
+  li {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    color: $gray-darker;
+
+    &:hover {
+      @include highlighted();
+    }
+
+    &.highlighted {
+      @include highlighted();
+    }
+  }
+}

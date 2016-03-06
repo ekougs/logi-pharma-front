@@ -1,0 +1,15 @@
+# Node, npm
+node_modules
+npm-debug.log
+
+# Intellij IDEA
+.idea
+*.iml
+
+# Generated sources
+*.css
+app/**/*.js
+app/**/*.js.map
+
+# Do not ignore tests specs
+!app/**/*.spec.js
