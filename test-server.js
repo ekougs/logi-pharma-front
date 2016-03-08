@@ -8,11 +8,7 @@ browserSync.init({
         "./app/**/*.e2e.html",
         "./app/**/*{js, css}"
     ],
-    "server": {
-        "routes": {
-            "/suggest": "./app/com/tiays/pharma/suggest"
-        }
-    },
+    "server": {},
     "open": false,
     "watchOptions": {
         "ignored": "*"

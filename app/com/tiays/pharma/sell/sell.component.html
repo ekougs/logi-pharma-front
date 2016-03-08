@@ -1,22 +1,14 @@
 <form class="form">
     <fieldset>
-        <legend>Client</legend>
-        <div class="form-group">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <label class="control-label" for="assure">Assur&eacute;</label>
-                <input type="text" id="assure" class="form-control form-control-only-bottom"
-                       placeholder="Code ou Nom"/>
-            </div>
-        </div>
-    </fieldset>
-    <fieldset>
         <legend>Produit</legend>
         <div class="form-group">
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <label class="control-label" for="product">Produit</label>
-                <input ph-autocomplete type="text" id="product"
+                <input type="text" id="product"
+                       suggest [observe]="_products" [descriptor]="_productRepresenter"
                        class="form-control form-control-only-bottom"
-                       placeholder="R&eacute;f&eacute;rence ou Libell&eacute;">
+                       placeholder="R&eacute;f&eacute;rence ou Libell&eacute;"
+                       [ngModel]="_query" (ngModelChange)="filterProducts($event)">
             </div>
         </div>
     </fieldset>

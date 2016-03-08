@@ -29,8 +29,8 @@ legend {
   border-top-width: 0;
   border-right-width: 0;
   border-left-width: 0;
+  padding-right:0;
   border-bottom: 1px solid $input-border;
-  margin: 0.5em;
   @include box-shadow(none);
   @include border-radius(0);
 }

@@ -18,14 +18,17 @@
   z-index: 1;
   @include border-bottom-radius(2px);
   @include border-top-right-radius(2px);
+  @include box-shadow(0 2px 5px 0 rgba(0, 0, 0, 0.26));
   border: 1px solid #CCC;
   background-color: #FFF;
   color: #333;
   list-style: none;
+  font-weight: 500;
   outline: none;
   padding: 2px;
   margin: 0;
   cursor: default;
+  position: absolute;
 
   li {
     text-overflow: ellipsis;
@@ -34,7 +37,7 @@
     display: inline-block;
     color: $gray-darker;
 
-    &:hover {
+    &.clickable:hover {
       @include highlighted();
     }
 

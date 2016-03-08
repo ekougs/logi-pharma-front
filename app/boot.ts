@@ -5,8 +5,12 @@ import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy, APP_BASE_HREF}
 import {bootstrap}    from 'angular2/platform/browser';
 
 import {AppComponent} from "./com/tiays/pharma/app.component";
+import {ArrayService} from "./com/tiays/pharma/util/array.service";
 
-// TODO move ROUTER_PROVIDERS to app
-bootstrap(AppComponent,
-    [ROUTER_PROVIDERS, provide(APP_BASE_HREF, {useValue: 'file://' + __dirname}),
-        provide(LocationStrategy, {useClass: HashLocationStrategy})]);
+var levenshtein = require('fast-levenshtein');
+
+bootstrap(AppComponent, [ROUTER_PROVIDERS,
+    provide('levenshtein', {useValue: levenshtein}),
+    provide(ArrayService, {useClass: ArrayService}),
+    provide(APP_BASE_HREF, {useValue: 'file://' + __dirname}),
+    provide(LocationStrategy, {useClass: HashLocationStrategy})]);

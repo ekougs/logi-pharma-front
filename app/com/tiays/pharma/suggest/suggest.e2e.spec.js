@@ -9,14 +9,14 @@
 describe('Autocomplete directive', function () {
 
     it('should show the popup on focus', function () {
-        browser.get('http://localhost:3000/suggest/suggest.e2e.html');
+        browser.get('http://localhost:3000/app/com/tiays/pharma/suggest/suggest.e2e.html');
         element(by.id('test')).click();
 
         expect(element(by.css('ul')).isDisplayed()).toBeTruthy();
     });
 
     it('should hide the popup when out of focus', function () {
-        browser.get('http://localhost:3000/suggest/suggest.e2e.html');
+        browser.get('http://localhost:3000/app/com/tiays/pharma/suggest/suggest.e2e.html');
         element(by.id('test')).click();
         element(by.id('outside')).click();
 
@@ -24,7 +24,7 @@ describe('Autocomplete directive', function () {
     });
 
     it('should select element on mouse click', function () {
-        browser.get('http://localhost:3000/suggest/suggest.e2e.html');
+        browser.get('http://localhost:3000/app/com/tiays/pharma/suggest/suggest.e2e.html');
         element(by.id('test')).click();
 
         element(by.css('li[title="Mr Cassius Clay"')).click();
@@ -36,7 +36,7 @@ describe('Autocomplete directive', function () {
 
     // Test highlight on hover
     //it('should highlight element on mouse hover', function () {
-    //    browser.get('http://localhost:3000/suggest/suggest.e2e.html');
+    //    browser.get('http://localhost:3000/app/com/tiays/pharma/suggest/suggest.e2e.html');
     //    element(by.id('test')).click();
     //
     //    browser.actions().mouseMove(browser.findElement(by.css('li[title="Mr Cassius Clay"'))).perform().then(function () {

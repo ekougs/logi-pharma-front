@@ -1,4 +1,4 @@
-import {Product} from "./sell.service";
+import {Product} from "./product.service";
 
 export var PRODUCTS: Product[] = [
     {code: "A290ZC", label: "Paracetamol", price: 350., contraindication: "Eviter en cas de grossesse.", stock: 350},

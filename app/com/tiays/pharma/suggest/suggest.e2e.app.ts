@@ -1,7 +1,7 @@
 import {Component} from "angular2/core";
 import {bootstrap}    from 'angular2/platform/browser';
 
-import {SuggestDirective, Representer} from "./suggest.directive";
+import {SuggestDirective, Descriptor} from "./suggest.directive";
 import {Observable} from "rxjs/Observable";
 
 interface Person {
@@ -18,7 +18,7 @@ let CELEBRITIES:Person[] = [
     {title: "Mr", name: "Lee", firstName: "Spike"}
 ];
 
-class PersonRepresenter implements Representer<Person> {
+class PersonDescriptor implements Descriptor<Person> {
     represent(person:Person):string {
         return person.title + " " + person.firstName + " " + person.name;
     }
@@ -29,7 +29,7 @@ class PersonRepresenter implements Representer<Person> {
         selector: 'suggest-test',
         template: `
         <div id="outside">Other element</div><input id="test" suggest [observe]="persons" [ngModel]="personRepr"
-             [representer]="personRepresenter()" (onSelectedElement)="onSelectedElement($event)"
+             [descriptor]="_personDescriptor" (onSelectedElement)="onSelectedElement($event)"
              (ngModelChange)="filterPersons($event)">
         `,
         directives: [SuggestDirective]
@@ -39,20 +39,17 @@ export class SuggestTestComponent {
     // Slice provides fastest array copy
     private persons:Person[] = CELEBRITIES.slice();
     private personRepr:string = "";
-
-    personRepresenter():Representer<Person> {
-        return new PersonRepresenter();
-    }
+    private _personDescriptor = new PersonDescriptor();
 
     onSelectedElement(person:Person) {
-        this.personRepr = this.personRepresenter().represent(person);
+        this.personRepr = this._personDescriptor.represent(person);
         this.replacePersons(person);
     }
 
     filterPersons(filter:string) {
-        var personRepresenter = new PersonRepresenter();
+        var personDescriptor = this._personDescriptor;
         this.replacePersons(...CELEBRITIES.filter(function personFilter(person:Person) {
-            return personRepresenter.represent(person).indexOf(filter) !== -1 ||
+            return personDescriptor.represent(person).indexOf(filter) !== -1 ||
                 person.name.toLowerCase().indexOf(filter.toLowerCase()) != -1 ||
                 person.firstName.toLowerCase().indexOf(filter.toLowerCase()) != -1;
         }));

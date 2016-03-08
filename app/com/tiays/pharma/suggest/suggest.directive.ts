@@ -5,24 +5,24 @@ import {CORE_DIRECTIVES, FORM_DIRECTIVES} from "angular2/common";
 import {ListWrapper} from "angular2/src/facade/collection";
 import { Observable } from "rxjs/Rx";
 
-const REPRESENTER_TOKEN:string = 'suggestComponentElementRepresenter';
+const DESCRIPTOR_TOKEN:string = 'suggestComponentElementRepresenter';
 const VIEW_STATE_TOKEN:string = 'suggestComponentViewState';
 const ON_SELECT_TOKEN:string = 'suggestComponentOnSelect';
 
 @Component({
     selector: 'suggest-view',
-    templateUrl: './suggest/suggest.component.html',
-    styleUrls: ['./suggest/suggest.component.css'],
+    templateUrl: 'app/com/tiays/pharma/suggest/suggest.component.html',
+    styleUrls: ['app/com/tiays/pharma/suggest/suggest.component.css'],
     directives: [CORE_DIRECTIVES]
 })
 class SuggestComponent<T> {
-    constructor(@Inject(REPRESENTER_TOKEN) private _representer:Representer<T>,
+    constructor(@Inject(DESCRIPTOR_TOKEN) private _descriptor:Descriptor<T>,
                 @Inject(VIEW_STATE_TOKEN) private _viewState,
                 @Inject(ON_SELECT_TOKEN) private _onSelect) {
     }
 
     represent(element:T) {
-        return this._representer.represent(element);
+        return this._descriptor.represent(element);
     }
 
     select(element:T) {
@@ -32,9 +32,17 @@ class SuggestComponent<T> {
     highlighted(element:T):boolean {
         return this._viewState.highlighted === element;
     }
+
+    hasElements():boolean {
+        return this._viewState.elements.length !== 0;
+    }
+
+    emptyMessage():string {
+        return "No suggestion available";
+    }
 }
 
-export interface Representer<T> {
+export interface Descriptor<T> {
     represent(element:T): string;
 }
 
@@ -55,7 +63,7 @@ export class SuggestDirective<T> implements OnInit {
     };
 
     @Input('observe') elements:any[];
-    @Input('representer') representer:Representer<T>;
+    @Input('descriptor') descriptor:Descriptor<T>;
     @Output() onSelectedElement:EventEmitter<T> = new EventEmitter<T>();
     private _viewState = {visible: false, width: 0, highlighted: undefined, elements: []};
     private _highlighted_idx:number = -1;
@@ -146,13 +154,13 @@ export class SuggestDirective<T> implements OnInit {
     }
 
     private render() {
-        this._viewState.width = this._callingElement.nativeElement.offsetWidth - 5;
+        this._viewState.width = this._callingElement.nativeElement.offsetWidth;
         this._viewState.elements = this.elements;
         var suggestDirective = this;
 
         this._compiler.compileInHost(<Type>SuggestComponent).then(function (suggestHostViewFactoryRef) {
             var dynamicProviders:ResolvedProvider[] =
-                Injector.resolve([new Provider(REPRESENTER_TOKEN, {useValue: suggestDirective.representer}),
+                Injector.resolve([new Provider(DESCRIPTOR_TOKEN, {useValue: suggestDirective.descriptor}),
                     new Provider(ON_SELECT_TOKEN, {useValue: suggestDirective.onSelect.bind(suggestDirective)}),
                     new Provider(VIEW_STATE_TOKEN, {useValue: suggestDirective._viewState})]);
             suggestDirective._viewContainer.createHostView(suggestHostViewFactoryRef, undefined, dynamicProviders);
