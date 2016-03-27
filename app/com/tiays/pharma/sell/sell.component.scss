@@ -1,3 +1,7 @@
+@import "../../../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+@import "../../../../../mixins";
+
+
 $sell-component-margin: 1em;
 
 div.navbar-fixed-bottom {
@@ -5,6 +9,53 @@ div.navbar-fixed-bottom {
   margin-bottom: $sell-component-margin;
 }
 
-.btn {
-  margin-right: $sell-component-margin;
+.table {
+  margin-top: 2em;
+}
+
+.quantity {
+  width: 5em;
+}
+
+.total {
+  text-align: right;
+  font-size: 2em;
+  margin-bottom: 1.5em;
+}
+
+.buttons {
+  float: right;
+}
+
+span.glyphicon-remove, span.glyphicon-info-sign {
+  margin-left: 0.3em;
+}
+
+.clickable:hover {
+  cursor: hand;
+}
+
+td input {
+  height: $input-height-base - ($padding-base-vertical * 1.5);
+  padding-bottom: 0;
+  padding-top: 0;
+  background-color: inherit;
+}
+
+span.glyphicon {
+  margin-top: 3px;
+}
+
+.info {
+  @include on-top();
+  @include border-radius(2px);
+  font-size: 0.9em;
+  padding: 0.4em;
+  cursor: default;
+  opacity: 0.8;
+}
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
 }

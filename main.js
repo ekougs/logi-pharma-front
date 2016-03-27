@@ -18,7 +18,7 @@ function createWindow() {
     mainWindow.loadURL('file://' + __dirname + '/index.html');
 
     // Open the DevTools.
-    if (process.env.ENV === "DEV") {
+    if (process.env.ENV === 'DEV') {
         mainWindow.webContents.openDevTools();
     }
 

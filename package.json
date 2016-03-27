@@ -17,7 +17,9 @@
     "serve:test": "npm run init:compil ; npm-run-all -p tsc:w watch:scss http-server:test",
     "daemon-http-server:test": "forever start test-server.js",
     "protractor:local": "protractor e2e.protractor.conf.js",
-    "test": "npm run init:compil ; npm-run-all -p daemon-http-server:test protractor:local ; forever stop test-server.js"
+    "test": "npm run init:compil ; npm-run-all -p daemon-http-server:test protractor:local ; forever stop test-server.js",
+    "build:mac":"electron-packager . logipharma --platform=darwin --arch=x64",
+    "build:windows":"electron-packager . logipharma --platform=win32 --arch=ia32"
   },
   "repository": {
     "type": "git",
@@ -48,6 +50,7 @@
     "babel-cli": "6.5.1",
     "browser-sync": "^2.11.1",
     "concurrently": "^1.0.0",
+    "electron-packager": "^5.2.1",
     "electron-prebuilt": "^0.36.0",
     "forever": "^0.15.1",
     "node-sass": "3.4.2",

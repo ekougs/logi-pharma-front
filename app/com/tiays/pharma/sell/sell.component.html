@@ -1,23 +1,69 @@
 <form class="form">
-    <fieldset>
-        <legend>Produit</legend>
-        <div class="form-group">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-                <label class="control-label" for="product">Produit</label>
-                <input type="text" id="product"
-                       suggest [observe]="_products" [descriptor]="_productRepresenter"
-                       class="form-control form-control-only-bottom"
-                       placeholder="R&eacute;f&eacute;rence ou Libell&eacute;"
-                       [ngModel]="_query" (ngModelChange)="filterProducts($event)">
-            </div>
+    <product (onSelectedProduct)="addProduct($event)"></product>
+    <div class="row">
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+        <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            <table class="table table-hover table-striped">
+                <tr>
+                    <th>Code</th>
+                    <th>Libellé</th>
+                    <th>Prix</th>
+                    <th>Quantité</th>
+                    <th>Sous-Total</th>
+                    <th></th>
+                </tr>
+                <template ngFor #cartItem [ngForOf]="cartItems()">
+                    <tr>
+                        <td>{{cartItem.product.code}}</td>
+                        <td>{{cartItem.product.label}}</td>
+                        <td class="pull-right">{{cartItem.product.price}}</td>
+                        <td>
+                            <input type="number" min="1" max="{{cartItem.product.stock}}"
+                                   class="form-control .input-sm quantity form-control-only-bottom"
+                                   [(ngModel)]="cartItem.quantity">
+                        </td>
+                        <td class="pull-right">{{ subtotal(cartItem) }}</td>
+                        <td>
+                            <span (click)="toggleInfo(cartItem)"
+                                  [ngClass]="{clickable:hasInfo(cartItem), disabled:!hasInfo(cartItem)}"
+                                  class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
+                            <template [ngIf]="hasInfo(cartItem)">
+                                <span [ngClass]="{show:info(cartItem).visible, hide:!info(cartItem).visible}"
+                                      (click)="toggleInfo(cartItem)"
+                                      class="info bg-primary">
+                                    {{ info(cartItem).text }}
+                                </span>
+                            </template>
+                            <span (click)="removeItem(cartItem)"
+                                  class="glyphicon glyphicon-remove clickable" aria-hidden="true">
+                            </span>
+                        </td>
+                    </tr>
+                </template>
+            </table>
         </div>
-    </fieldset>
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+    </div>
     <div class="navbar-fixed-bottom">
-        <button class="btn btn-primary pull-right" type="button">
-            <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Vendre
-        </button>
-        <button class="btn btn-default pull-right" type="button">
-            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Annuler
-        </button>
+        <template [ngIf]="!isCartEmpty()">
+            <div class="row total">
+                <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7"></div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">Total</div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">{{ total() }}</div>
+                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+            </div>
+        </template>
+        <div class="row">
+            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7"></div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 buttons">
+                <button class="btn btn-default" type="button" [disabled]="isCartEmpty()" (click)="resetCart()">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Annuler
+                </button>
+                <button class="btn btn-primary" type="button" [disabled]="isCartEmpty()" (click)="submitCart()">
+                    <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>Finaliser
+                </button>
+            </div>
+            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
+        </div>
     </div>
 </form>

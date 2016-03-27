@@ -156,14 +156,16 @@ export class SuggestDirective<T> implements OnInit {
     private render() {
         this._viewState.width = this._callingElement.nativeElement.offsetWidth;
         this._viewState.elements = this.elements;
-        var suggestDirective = this;
 
         this._compiler.compileInHost(<Type>SuggestComponent).then(function (suggestHostViewFactoryRef) {
-            var dynamicProviders:ResolvedProvider[] =
-                Injector.resolve([new Provider(DESCRIPTOR_TOKEN, {useValue: suggestDirective.descriptor}),
-                    new Provider(ON_SELECT_TOKEN, {useValue: suggestDirective.onSelect.bind(suggestDirective)}),
-                    new Provider(VIEW_STATE_TOKEN, {useValue: suggestDirective._viewState})]);
-            suggestDirective._viewContainer.createHostView(suggestHostViewFactoryRef, undefined, dynamicProviders);
-        });
+            var componentContext:ResolvedProvider[] = this.getComponentContext();
+            this._viewContainer.createHostView(suggestHostViewFactoryRef, undefined, componentContext);
+        }.bind(this));
     }
+
+    private getComponentContext() {
+        return Injector.resolve([new Provider(DESCRIPTOR_TOKEN, {useValue: this.descriptor}),
+            new Provider(ON_SELECT_TOKEN, {useValue: this.onSelect.bind(this)}),
+            new Provider(VIEW_STATE_TOKEN, {useValue: this._viewState})]);
+    };
 }

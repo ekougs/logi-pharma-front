@@ -30,3 +30,8 @@
   -ms-border-top-right-radius: $radius;
   border-top-right-radius: $radius;
 }
+
+@mixin on-top() {
+  z-index: 1;
+  position: absolute;
+}

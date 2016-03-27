@@ -6,4 +6,8 @@ export class ArrayService {
         source.splice(0, source.length);
         source.push(...elements);
     }
+
+    reset<T>(source:T[]) {
+        this.replaceAll(source, ...[]);
+    }
 }

@@ -1,6 +1,7 @@
-# Node, npm
+# Node, npm, typings
 node_modules
 npm-debug.log
+typings
 
 # Intellij IDEA
 .idea
@@ -13,3 +14,9 @@ app/**/*.js.map
 
 # Do not ignore tests specs
 !app/**/*.spec.js
+
+# Build
+logi-pharma-front-*/
+
+# Mac
+.DS_Store
