@@ -16,7 +16,8 @@ app/**/*.js.map
 !app/**/*.spec.js
 
 # Build
-logi-pharma-front-*/
+dist
+logipharma-*/
 
 # Mac
 .DS_Store

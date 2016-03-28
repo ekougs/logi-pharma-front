@@ -1,4 +1,4 @@
-var env = require('./environment.js');
+var env = require('./config/environment.js');
 
 // This is the configuration for a smoke test for an Angular2 application.
 //
