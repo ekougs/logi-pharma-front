@@ -1,12 +1,12 @@
 @import "mixins";
 
-$icon-font-path: "node_modules/bootstrap-sass/assets/fonts/bootstrap/";
+$icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 $body-bg: rgba(245, 245, 245, 0.1);
 
 $box-shadow-default: inset 0 0 0 rgba(0, 0, 0, 0.075), 0 0 0 rgba(102, 175, 233, 0.8);
 $btn-margin: 0.5em;
 
-@import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 
 fieldset {
   padding: .35em .625em .75em;

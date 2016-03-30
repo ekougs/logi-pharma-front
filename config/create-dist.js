@@ -6,8 +6,9 @@
     distApp();
 
     function distApp() {
-        cpx.copy('*.{html,css,js,json}', 'dist/', logErr);
-        cpx.copy('app/**/*.{html,css,js,js.map,json}', 'dist/app', logErr);
+        cpx.copy('*.{html,css,js,json}', 'dist', logErr);
+        cpx.copy('src/*.{html,css,js,json}', 'dist/src', logErr);
+        cpx.copy('src/app/**/*.{html,css,js,js.map,json}', 'dist/src/app', logErr);
     }
 
     function distVendor() {

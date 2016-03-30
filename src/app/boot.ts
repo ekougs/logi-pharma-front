@@ -1,4 +1,4 @@
-///<reference path="../node_modules/angular2/ts/typings/node/node.d.ts" />
+///<reference path="../../node_modules/angular2/ts/typings/node/node.d.ts" />
 
 import {provide, enableProdMode} from 'angular2/core';
 import {ROUTER_PROVIDERS, LocationStrategy, HashLocationStrategy, APP_BASE_HREF} from 'angular2/router';

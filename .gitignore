@@ -9,8 +9,8 @@ typings
 
 # Generated sources
 *.css
-app/**/*.js
-app/**/*.js.map
+src/app/**/*.js
+src/app/**/*.js.map
 
 # Do not ignore tests specs
 !app/**/*.spec.js

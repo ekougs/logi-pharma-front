@@ -5,8 +5,8 @@ var browserSync = require("browser-sync");
 browserSync.init({
     "ui": false,
     "files": [
-        "./app/**/*.e2e.html",
-        "./app/**/*{js, css}"
+        "src/app/**/*.e2e.html",
+        "src/app/**/*{js, css}"
     ],
     "server": {},
     "open": false,

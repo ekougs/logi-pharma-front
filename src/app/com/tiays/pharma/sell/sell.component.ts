@@ -1,4 +1,4 @@
-///<reference path="../../../../../node_modules/angular2/typings/es6-collections/es6-collections.d.ts" />
+///<reference path="../../../../../../node_modules/angular2/typings/es6-collections/es6-collections.d.ts" />
 
 import {Component, Inject} from 'angular2/core';
 import {NgFor} from "angular2/common";
