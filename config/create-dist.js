@@ -1,14 +1,19 @@
 (function () {
     var fs = require('fs');
     var cpx = require('cpx');
+    var del = require('del');
 
     distVendor();
     distApp();
 
     function distApp() {
-        cpx.copy('*.{html,css,js,json}', 'dist', logErr);
-        cpx.copy('src/*.{html,css,js,json}', 'dist/src', logErr);
-        cpx.copy('src/app/**/*.{html,css,js,js.map,json}', 'dist/src/app', logErr);
+        cpx.copy('*.{html,css,js,json}', 'dist');
+        cpx.copy('src/*.{html,css,js,json}', 'dist/src');
+        cpx.copy('src/app/**/*.{html,css,js,js.map,json}', 'dist/src/app', null, delTests);
+    }
+
+    function delTests() {
+        del('dist/src/**/*.{e2e,test}.*');
     }
 
     function distVendor() {

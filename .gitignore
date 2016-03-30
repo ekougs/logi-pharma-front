@@ -1,7 +1,11 @@
-# Node, npm, typings
+# Build tools
 node_modules
 npm-debug.log
 typings
+
+# Build
+dist
+logipharma-*/
 
 # Intellij IDEA
 .idea
@@ -14,10 +18,6 @@ src/app/**/*.js.map
 
 # Do not ignore tests specs
 !app/**/*.spec.js
-
-# Build
-dist
-logipharma-*/
 
 # Mac
 .DS_Store
