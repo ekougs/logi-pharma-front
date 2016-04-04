@@ -1,7 +1,7 @@
 ///<reference path="../../../../../../node_modules/angular2/typings/es6-promise/es6-promise.d.ts" />
 ///<reference path="../../../../../../node_modules/typescript/lib/lib.d.ts" />
 
-import { Component, Output, EventEmitter } from 'angular2/core';
+import { Component, Output, EventEmitter, Inject } from 'angular2/core';
 
 import {ProductService, Product} from "./product.service";
 import {SuggestDirective, Descriptor} from "../suggest/suggest.directive";
@@ -30,14 +30,12 @@ export class ProductComponent {
         resolve();
     });
 
-    constructor(private _productService:ProductService, private _arrayService:ArrayService) {
+    constructor(private _productService:ProductService, private _arrayService:ArrayService, @Inject('_') private _) {
     }
 
     filterProducts(query:string) {
         if(query.length < 3) {
-            this._lastPromise.then(() => {
-                this.resetProducts();
-            });
+            this._lastPromise.then(this.resetProducts.bind(this));
             return;
         }
         this._lastPromise = this._productService.filterProducts(query).then(this.setProducts.bind(this));
@@ -54,6 +52,6 @@ export class ProductComponent {
     }
 
     private resetProducts() {
-        this._arrayService.reset(this._products);
+        this._.remove(this._products);
     }
 }
