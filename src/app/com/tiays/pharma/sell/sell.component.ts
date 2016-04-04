@@ -1,8 +1,10 @@
 ///<reference path="../../../../../../node_modules/angular2/typings/es6-collections/es6-collections.d.ts" />
+/// <reference path="../../../../../../typings/main/definitions/lodash/index.d.ts" />
 
 import {Component, Inject} from 'angular2/core';
 import {NgFor} from "angular2/common";
 import {Observable} from "rxjs/Observable";
+import _ = require('lodash');
 
 import {ProductComponent} from "../product/product.component";
 import {Product} from "../product/product.service";
@@ -19,7 +21,7 @@ export class SellComponent {
     private _cartItems:Map<Product, CartItem> = new Map<Product, CartItem>();
     private _productWithVisibleInfo:Product;
 
-    constructor(private _sellService:SellService, @Inject('_') private _) {
+    constructor(private _sellService:SellService) {
     }
 
 
@@ -85,6 +87,6 @@ export class SellComponent {
     }
 
     hasInfo(cartItem:CartItem):boolean {
-        return !this._.isEmpty(cartItem.product.contraindication);
+        return !_.isEmpty(cartItem.product.contraindication);
     }
 }

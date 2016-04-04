@@ -1,7 +1,9 @@
 ///<reference path="../../../../../../node_modules/angular2/typings/es6-promise/es6-promise.d.ts" />
+/// <reference path="../../../../../../typings/main/definitions/lodash/index.d.ts" />
 ///<reference path="../../../../../../node_modules/typescript/lib/lib.d.ts" />
 
 import { Component, Output, EventEmitter, Inject } from 'angular2/core';
+import _ = require('lodash');
 
 import {ProductService, Product} from "./product.service";
 import {SuggestDirective, Descriptor} from "../suggest/suggest.directive";
@@ -30,7 +32,7 @@ export class ProductComponent {
         resolve();
     });
 
-    constructor(private _productService:ProductService, private _arrayService:ArrayService, @Inject('_') private _) {
+    constructor(private _productService:ProductService, private _arrayService:ArrayService) {
     }
 
     filterProducts(query:string) {
@@ -52,6 +54,6 @@ export class ProductComponent {
     }
 
     private resetProducts() {
-        this._.remove(this._products);
+        _.remove(this._products);
     }
 }
