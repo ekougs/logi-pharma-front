@@ -1,4 +1,4 @@
-var env = require('./config/environment.js');
+var env = require('./environment.js');
 
 // This is the configuration for a smoke test for an Angular2 application.
 //
@@ -18,7 +18,7 @@ exports.config = {
     framework: 'jasmine',
 
     specs: [
-        'app/**/*.e2e.spec.js'
+        '../src/app/**/*.e2e.spec.js'
     ],
 
     capabilities: env.capabilities,

@@ -6,7 +6,7 @@ browserSync.init({
     "ui": false,
     "files": [
         "src/app/**/*.e2e.html",
-        "src/app/**/*{js, css}"
+        "src/app/**/*{js, js.map, css}"
     ],
     "server": {},
     "open": false,
