@@ -11,6 +11,7 @@ logipharma-*/
 # Intellij IDEA
 .idea
 *.iml
+.editorconfig
 
 # Generated sources
 *.css

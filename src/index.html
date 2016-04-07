@@ -19,16 +19,17 @@
     <!-- 2. Configure SystemJS -->
     <script>
         System.config({
-            packages: {
-                app: {
-                    format: 'register',
-                    defaultExtension: 'js'
-                }
-            },
-            map: {
-                lodash: '../node_modules/lodash/lodash.js'
-            }
-        });
+                          packages: {
+                              app: {
+                                  format: 'register',
+                                  defaultExtension: 'js'
+                              }
+                          },
+                          map: {
+                              lodash: '../node_modules/lodash/lodash.js',
+                              levenshtein: '../node_modules/fast-levenshtein/levenshtein.js'
+                          }
+                      });
         System.import('app/boot')
                 .then(null, console.error.bind(console));
     </script>

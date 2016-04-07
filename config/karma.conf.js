@@ -2,27 +2,25 @@ module.exports = function (config) {
     config.set({
                    basePath: '..',
 
-                   frameworks: ['jasmine'],
+                   frameworks: ['jasmine', 'requirejs'],
 
                    files: [
                        // paths loaded by Karma
-                       {
-                           pattern: 'node_modules/angular2/bundles/angular2-polyfills.js',
-                           included: true,
-                           watched: true
-                       },
+                       {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: true},
                        {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true},
                        {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: true},
                        {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: true},
                        {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true},
+                       {pattern: 'node_modules/fast-levenshtein/levenshtein.js', included: true, watched: true},
+
                        {pattern: 'config/karma-test-shim.js', included: true, watched: true},
 
                        // paths loaded via module imports
-                       {pattern: 'src/**/*.js', included: false, watched: true},
+                       {pattern: 'src/**/*.js', included: false},
 
                        // paths to support debugging with source maps in dev tools
-                       {pattern: 'src/**/*.ts', included: false, watched: false},
-                       {pattern: 'src/**/*.js.map', included: false, watched: false}
+                       {pattern: 'src/**/*.ts', included: false},
+                       {pattern: 'src/**/*.js.map', included: false}
                    ],
 
                    exclude: [
@@ -48,7 +46,8 @@ module.exports = function (config) {
                    plugins: [
                        'karma-jasmine',
                        'karma-coverage',
-                       'karma-chrome-launcher'
+                       'karma-chrome-launcher',
+                       'karma-requirejs'
                    ],
 
                    // Coverage reporter generates the coverage

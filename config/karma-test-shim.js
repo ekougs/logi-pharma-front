@@ -1,4 +1,3 @@
-
 // Turn on full stack traces in errors to help debugging
 Error.stackTraceLimit = Infinity;
 
@@ -6,22 +5,47 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 1000;
 
 // // Cancel Karma's synchronous start,
 // // we will call `__karma__.start()` later, once all the specs are loaded.
-__karma__.loaded = function() {};
+__karma__.loaded = function () {
+};
 
+var libMap = {
+    // Mapped because I retrieved those through require
+    'levenshtein': getPathMapping('node_modules/fast-levenshtein/levenshtein.js'),
+    'lodash': getPathMapping('node_modules/lodash/lodash.js')
+};
+
+function getPathMapping(src) {
+    return getKarmaPathMapping('/base/' + src);
+}
+
+function getKarmaPathMapping(karmaSrc) {
+    return karmaSrc + '?' + window.__karma__.files[karmaSrc];
+}
+
+var appFileMap = Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, libMap);
 System.config({
                   packages: {
                       'base/src': {
                           defaultExtension: 'js',
                           format: 'register',
-                          map: Object.keys(window.__karma__.files).filter(onlyAppFiles).reduce(createPathRecords, {})
+                          map: appFileMap
                       }
                   }
               });
 
 System.import('angular2/src/platform/browser/browser_adapter')
-    .then(function(browser_adapter) { browser_adapter.BrowserDomAdapter.makeCurrent(); })
-    .then(function() { return Promise.all(resolveTestFiles()); })
-    .then(function() { __karma__.start(); }, function(error) { console.log(error.stack, error.message);__karma__.error(error.stack || error); });
+    .then(function (browser_adapter) {
+        browser_adapter.BrowserDomAdapter.makeCurrent();
+    })
+    .then(function () {
+        return Promise.all(resolveTestFiles());
+    })
+    .then(function () {
+        __karma__.start();
+    }, function (error) {
+        console.log(error.stack, error.message);
+        __karma__.error(error.stack || error);
+    });
 
 function createPathRecords(pathsMapping, appPath) {
     // creates local module name mapping to global path with karma's fingerprint in path, e.g.:
@@ -30,7 +54,7 @@ function createPathRecords(pathsMapping, appPath) {
     var pathParts = appPath.split('/');
     var moduleName = './' + pathParts.slice(Math.max(pathParts.length - 2, 1)).join('/');
     moduleName = moduleName.replace(/\.js$/, '');
-    pathsMapping[moduleName] = appPath + '?' + window.__karma__.files[appPath];
+    pathsMapping[moduleName] = getKarmaPathMapping(appPath);
     return pathsMapping;
 }
 
@@ -45,7 +69,7 @@ function onlySpecFiles(path) {
 function resolveTestFiles() {
     return Object.keys(window.__karma__.files)  // All files served by Karma.
         .filter(onlySpecFiles)
-        .map(function(moduleName) {
+        .map(function (moduleName) {
             // loads all spec files via their global module names (e.g.
             // 'base/dist/vg-player/vg-player.spec')
             return System.import(moduleName);

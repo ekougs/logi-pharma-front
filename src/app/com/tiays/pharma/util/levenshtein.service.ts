@@ -1,20 +1,11 @@
+///<reference path="../declar/levenshtein/index.d.ts" />
+
 import {Injectable,Inject} from "angular2/core";
-
-export class Levenshtein {
-    constructor(private _distance:number) {
-    }
-
-    get distance():number {
-        return this._distance;
-    }
-}
+import levenshtein = require('levenshtein');
 
 @Injectable()
 export class LevenshteinService {
-    constructor(@Inject('levenshtein') private _levenshtein) {
-    }
-
-    distance(str1:string, str2:string):Levenshtein {
-        return new Levenshtein(this._levenshtein.get(str1, str2));
+    distance(str1:string, str2:string):number {
+        return levenshtein.get(str1, str2);
     }
 }

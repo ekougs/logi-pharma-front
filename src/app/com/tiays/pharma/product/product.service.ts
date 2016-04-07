@@ -28,7 +28,7 @@ export class ProductService {
     }
 
     correctedDistance(str1:string, str2:string):number {
-        var distance = this._levenshteinService.distance(str1.toLowerCase(), str2.toLowerCase()).distance;
+        let distance = this._levenshteinService.distance(str1.toLowerCase(), str2.toLowerCase());
         return Math.abs(distance - ProductService.lengthDiff(str1, str2));
     }
 

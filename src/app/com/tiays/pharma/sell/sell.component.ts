@@ -72,7 +72,7 @@ export class SellComponent {
     }
 
     toggleInfo(cartItem:CartItem) {
-        if(this._productWithVisibleInfo === cartItem.product) {
+        if (this._productWithVisibleInfo === cartItem.product) {
             this._productWithVisibleInfo = undefined;
         } else {
             this._productWithVisibleInfo = cartItem.product;
