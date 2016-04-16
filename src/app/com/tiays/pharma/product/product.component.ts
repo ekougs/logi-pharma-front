@@ -9,7 +9,7 @@ import {ProductService, Product} from "./product.service";
 import {SuggestDirective, Descriptor} from "../suggest/suggest.directive";
 import {ArrayService} from "../util/array.service";
 
-class ProductRepresenter implements Descriptor<Product> {
+class ProductDescriptor implements Descriptor<Product> {
     represent(product:Product):string {
         return product.code + " - " + product.label;
     }
@@ -26,7 +26,7 @@ export class ProductComponent {
     @Output() onSelectedProduct:EventEmitter<Product> = new EventEmitter<Product>();
 
     private _products:Product[] = [];
-    private _productRepresenter = new ProductRepresenter();
+    private _productDescriptor = new ProductDescriptor();
     private _query:string = undefined;
     private _lastPromise:Promise<Product[]> = new Promise<Product[]>((resolve) => {
         resolve();

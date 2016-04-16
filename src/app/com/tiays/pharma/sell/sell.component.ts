@@ -9,13 +9,14 @@ import _ = require('lodash');
 import {ProductComponent} from "../product/product.component";
 import {Product} from "../product/product.service";
 import {CartItem, SellService} from "./sell.service";
+import {HealthInsuranceComponent} from "../healthinsurance/health.insurance.component";
 
 @Component({
     selector: 'sell',
     templateUrl: 'app/com/tiays/pharma/sell/sell.component.html',
     styleUrls: ['app/com/tiays/pharma/sell/sell.component.css'],
     providers: [SellService],
-    directives: [ProductComponent, NgFor]
+    directives: [HealthInsuranceComponent, ProductComponent, NgFor]
 })
 export class SellComponent {
     private _cartItems:Map<Product, CartItem> = new Map<Product, CartItem>();

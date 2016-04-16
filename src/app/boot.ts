@@ -6,7 +6,7 @@ import {AppComponent} from './com/tiays/pharma/app.component';
 import {ArrayService} from './com/tiays/pharma/util/array.service';
 
 // IMPORTANT Because of conflict between node and require typed declarations
-declare var __dirname: string;
+declare let __dirname: string;
 
 enableProdMode();
 

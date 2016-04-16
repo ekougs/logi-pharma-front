@@ -28,7 +28,7 @@ class PersonDescriptor implements Descriptor<Person> {
     {
         selector: 'suggest-test',
         template: `
-        <div id="outside">Other element</div><input id="test" suggest [observe]="persons" [ngModel]="personRepr"
+        <div id="outside">Other element</div><input id="test" suggest [observe]="persons" [ngModel]="personDescription"
              [descriptor]="_personDescriptor" (onSelectedElement)="onSelectedElement($event)"
              (ngModelChange)="filterPersons($event)">
         `,
@@ -38,16 +38,16 @@ class PersonDescriptor implements Descriptor<Person> {
 export class SuggestTestComponent {
     // Slice provides fastest array copy
     private persons:Person[] = CELEBRITIES.slice();
-    private personRepr:string = "";
+    private personDescription:string = "";
     private _personDescriptor = new PersonDescriptor();
 
     onSelectedElement(person:Person) {
-        this.personRepr = this._personDescriptor.represent(person);
+        this.personDescription = this._personDescriptor.represent(person);
         this.replacePersons(person);
     }
 
     filterPersons(filter:string) {
-        var personDescriptor = this._personDescriptor;
+        let personDescriptor = this._personDescriptor;
         this.replacePersons(...CELEBRITIES.filter(function personFilter(person:Person) {
             return personDescriptor.represent(person).indexOf(filter) !== -1 ||
                 person.name.toLowerCase().indexOf(filter.toLowerCase()) != -1 ||

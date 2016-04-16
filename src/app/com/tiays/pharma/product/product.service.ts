@@ -18,26 +18,12 @@ export class ProductService {
     }
 
     filterProducts(query:string):Promise<Product[]> {
-        return this.getProducts().then(function (products:Product[]) {
-            return products.filter((product) => {
-                var maxDist = ProductService.maxDist(query);
-                return this.correctedDistance(product.code, query) <= maxDist ||
-                    this.correctedDistance(product.label, query) <= maxDist;
-            });
-        }.bind(this));
-    }
-
-    correctedDistance(str1:string, str2:string):number {
-        let distance = this._levenshteinService.distance(str1.toLowerCase(), str2.toLowerCase());
-        return Math.abs(distance - ProductService.lengthDiff(str1, str2));
-    }
-
-    static maxDist(str:string):number {
-        return Math.round(str.length / 3);
-    }
-
-    static lengthDiff(str1:string, str2:string):number {
-        return Math.abs(str1.length - str2.length);
+        return this.getProducts()
+                   .then(function (products:Product[]) {
+                       return this._levenshteinService.matchingItems(query, products,
+                                                                     (product) => product.label,
+                                                                     (product) => product.code);
+                   }.bind(this));
     }
 }
 

@@ -12,6 +12,8 @@ module.exports = function (config) {
                        {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: true},
                        {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true},
                        {pattern: 'node_modules/fast-levenshtein/levenshtein.js', included: true, watched: true},
+                       {pattern: 'node_modules/lodash/lodash.js', included: true, watched: true},
+                       {pattern: 'node_modules/moment/moment.js', included: true, watched: true},
 
                        {pattern: 'config/karma-test-shim.js', included: true, watched: true},
 

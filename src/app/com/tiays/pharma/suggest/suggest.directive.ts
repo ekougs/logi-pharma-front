@@ -5,7 +5,7 @@ import {CORE_DIRECTIVES, FORM_DIRECTIVES} from "angular2/common";
 import {ListWrapper} from "angular2/src/facade/collection";
 import { Observable } from "rxjs/Rx";
 
-const DESCRIPTOR_TOKEN:string = 'suggestComponentElementRepresenter';
+const DESCRIPTOR_TOKEN:string = 'suggestComponentElementDescriptor';
 const VIEW_STATE_TOKEN:string = 'suggestComponentViewState';
 const ON_SELECT_TOKEN:string = 'suggestComponentOnSelect';
 
@@ -70,7 +70,7 @@ export class SuggestDirective<T> implements OnInit {
 
     constructor(private _callingElement:ElementRef, private _viewContainer:ViewContainerRef,
                 private _compiler:Compiler) {
-        var nativeCallingElement = _callingElement.nativeElement;
+        let nativeCallingElement = _callingElement.nativeElement;
         nativeCallingElement.addEventListener('mousedown', this.show.bind(this));
         nativeCallingElement.addEventListener('focus', this.show.bind(this));
         nativeCallingElement.addEventListener('blur', this.hide.bind(this));
@@ -90,7 +90,7 @@ export class SuggestDirective<T> implements OnInit {
     }
 
     navigate(event) {
-        var trigger = this.actions[event.keyCode];
+        let trigger = this.actions[event.keyCode];
         if (trigger) {
             trigger();
         }
@@ -158,7 +158,7 @@ export class SuggestDirective<T> implements OnInit {
         this._viewState.elements = this.elements;
 
         this._compiler.compileInHost(<Type>SuggestComponent).then(function (suggestHostViewFactoryRef) {
-            var componentContext:ResolvedProvider[] = this.getComponentContext();
+            let componentContext:ResolvedProvider[] = this.getComponentContext();
             this._viewContainer.createHostView(suggestHostViewFactoryRef, undefined, componentContext);
         }.bind(this));
     }

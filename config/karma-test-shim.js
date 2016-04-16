@@ -11,7 +11,8 @@ __karma__.loaded = function () {
 var libMap = {
     // Mapped because I retrieved those through require
     'levenshtein': getPathMapping('node_modules/fast-levenshtein/levenshtein.js'),
-    'lodash': getPathMapping('node_modules/lodash/lodash.js')
+    'lodash': getPathMapping('node_modules/lodash/lodash.js'),
+    'moment': getPathMapping('node_modules/moment/moment.js')
 };
 
 function getPathMapping(src) {
