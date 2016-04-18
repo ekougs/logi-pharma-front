@@ -12,7 +12,8 @@ var libMap = {
     // Mapped because I retrieved those through require
     'levenshtein': getPathMapping('node_modules/fast-levenshtein/levenshtein.js'),
     'lodash': getPathMapping('node_modules/lodash/lodash.js'),
-    'moment': getPathMapping('node_modules/moment/moment.js')
+    'moment': getPathMapping('node_modules/moment/moment.js'),
+    'crypto-js': '../node_modules/cryptojs/cryptojs.js'
 };
 
 function getPathMapping(src) {

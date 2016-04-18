@@ -1,10 +1,15 @@
 ///<reference path="../../../../../../typings/main/ambient/moment/index.d.ts" />
 ///<reference path="../../../../../../node_modules/angular2/typings/es6-promise/es6-promise.d.ts" />
 ///<reference path="../../../../../../node_modules/angular2/typings/es6-collections/es6-collections.d.ts" />
+/// <reference path="../../../../../../typings/main/definitions/lodash/index.d.ts" />
+/// <reference path="../../../../../../typings/main/ambient/crypto-js/index.d.ts" />
 
 import {Injectable} from "angular2/core";
-
+import _ = require('lodash');
+import CryptoJS = require('crypto-js');
+import moment = require('moment');
 import Moment = moment.Moment;
+
 import {CARDS} from "./mock-health-insurance-cards";
 import {LevenshteinService} from "../util/levenshtein.service";
 
@@ -23,6 +28,7 @@ export interface Person {
 }
 
 export interface Reimbursement {
+    categoryCode: string;
     category: string;
     rate: number;
 }
@@ -71,5 +77,27 @@ export class HealthInsuranceService {
             policyId: card.policyId,
             company: card.company
         }
+    }
+
+    getCard(policyHolder:PolicyHolder):Promise<HealthInsuranceCard> {
+        return new Promise((resolve) => {
+            setTimeout(()=> {
+                let card:HealthInsuranceCard = _.first(CARDS.filter((card) => {
+                    return _.some(card.policyHolders, (person) => {
+                        return _.isEqual(policyHolder.person, person);
+                    });
+                }));
+                resolve(card);
+            }, 500)
+        });
+    }
+
+    getImageUrl(companyName:string):string {
+        var fileName = CryptoJS.MD5(companyName).toString();
+        return "app/com/tiays/pharma/healthinsurance/" + fileName + ".png";
+    }
+
+    expired(card:HealthInsuranceCard):boolean {
+        return card.expiryDate.diff(moment.now(), 'days') < 0;
     }
 }

@@ -1,6 +1,18 @@
 <form class="form">
-    <health-insurance></health-insurance>
-    <product (onSelectedProduct)="addProduct($event)"></product>
+    <div class="row">
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <health-insurance (onSelectedCard)="setCard($event)"></health-insurance>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+    </div>
+    <div class="row">
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <product (onSelectedProduct)="addProduct($event)"></product>
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2"></div>
+    </div>
     <div class="row">
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
         <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10">
@@ -10,6 +22,8 @@
                     <th>Libellé</th>
                     <th>Prix</th>
                     <th>Quantité</th>
+                    <th [ngClass]="{'not-displayed':!hasCard()}">Prise en charge(%)</th>
+                    <th [ngClass]="{'not-displayed':!hasCard()}">Prise en charge</th>
                     <th>Sous-Total</th>
                     <th></th>
                 </tr>
@@ -23,6 +37,10 @@
                                    class="form-control .input-sm quantity form-control-only-bottom"
                                    [(ngModel)]="cartItem.quantity">
                         </td>
+                        <td [ngClass]="{'not-displayed':!hasCard()}">
+                            {{ reimbursementRate(cartItem.product) * 100 }}&#37;
+                        </td>
+                        <td [ngClass]="{'not-displayed':!hasCard()}">{{ reimbursement(cartItem) }}</td>
                         <td class="pull-right">{{ subtotal(cartItem) }}</td>
                         <td>
                             <span (click)="toggleInfo(cartItem)"
@@ -56,7 +74,7 @@
         </template>
         <div class="row">
             <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7"></div>
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 buttons">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 pull-right">
                 <button class="btn btn-default" type="button" [disabled]="isCartEmpty()" (click)="resetCart()">
                     <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>Annuler
                 </button>

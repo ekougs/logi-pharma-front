@@ -1,0 +1,9 @@
+<template [ngIf]="!selected">
+    <policy-holder-autocomplete (onSelectedPolicyHolder)="displayCard($event)"></policy-holder-autocomplete>
+</template>
+<template [ngIf]="selected">
+    <div class="pull-right">
+        <span class="glyphicon glyphicon-remove clickable" (click)="unselect()"></span>
+    </div>
+    <health-insurance-card [card]="card" [policyHolder]="policyHolder"></health-insurance-card>
+</template>

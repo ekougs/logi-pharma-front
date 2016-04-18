@@ -28,6 +28,7 @@ export class ProductService {
 }
 
 export interface Product {
+    categoryCode: string,
     code: string,
     label: string,
     price: number,

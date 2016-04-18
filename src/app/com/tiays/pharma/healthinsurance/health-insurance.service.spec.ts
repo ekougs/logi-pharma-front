@@ -2,11 +2,11 @@
 /// <reference path="../../../../../../typings/main/ambient/moment/index.d.ts" />
 
 import {it, describe, expect} from 'angular2/testing';
-import {HealthInsuranceService} from './health.insurance.service';
-import {LevenshteinService} from '../util/levenshtein.service';
-import {PolicyHolder} from './health.insurance.service';
 import moment from 'moment';
 import Moment = moment.Moment;
+
+import {HealthInsuranceService, PolicyHolder} from './health-insurance.service';
+import {LevenshteinService} from '../util/levenshtein.service';
 
 describe('Health Insurance Service Tests', function () {
     let healthInsuranceService = new HealthInsuranceService(new LevenshteinService());
@@ -38,6 +38,14 @@ describe('Health Insurance Service Tests', function () {
         healthInsuranceService.getPolicyHolders('0009463U87SN')
                               .then((policyHolders) => {
                                   expect(policyHolders).toEqual(DIEDHIOU_FAMILY);
+                              })
+                              .then(done);
+    });
+
+    it('should return Diedhiou family card when asked for Pierre Diedhiou card', (done) => {
+        healthInsuranceService.getCard(DIEDHIOU_PIERRE)
+                              .then((card) => {
+                                  expect(card.policyId).toEqual('0009463U87SN');
                               })
                               .then(done);
     });

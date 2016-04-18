@@ -4,7 +4,7 @@ import { Component, EventEmitter, Output } from 'angular2/core';
 import _ = require('lodash');
 import moment from 'moment';
 
-import {PolicyHolder, Person, HealthInsuranceService} from './health.insurance.service';
+import {PolicyHolder, Person, HealthInsuranceService} from './health-insurance.service';
 import {ArrayService} from '../util/array.service';
 import {SuggestDirective, Descriptor} from '../suggest/suggest.directive';
 
@@ -26,7 +26,6 @@ class PolicyHolderDescriptor implements Descriptor<PolicyHolder> {
 @Component({
                selector: 'policy-holder-autocomplete',
                templateUrl: 'app/com/tiays/pharma/healthinsurance/policy-holder.autocomplete.component.html',
-               styleUrls: ['app/com/tiays/pharma/healthinsurance/policy-holder.autocomplete.component.css'],
                providers: [HealthInsuranceService, ArrayService],
                directives: [SuggestDirective]
            })

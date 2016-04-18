@@ -23,16 +23,8 @@ div.navbar-fixed-bottom {
   margin-bottom: 1.5em;
 }
 
-.buttons {
-  float: right;
-}
-
 span.glyphicon-remove, span.glyphicon-info-sign {
   margin-left: 0.3em;
-}
-
-.clickable:hover {
-  cursor: hand;
 }
 
 td input {
@@ -58,4 +50,8 @@ span.glyphicon {
 .disabled {
   opacity: 0.6;
   pointer-events: none;
+}
+
+div.row {
+  margin-top: 1.5em;
 }

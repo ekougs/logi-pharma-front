@@ -9,18 +9,20 @@ import _ = require('lodash');
 import {ProductComponent} from "../product/product.component";
 import {Product} from "../product/product.service";
 import {CartItem, SellService} from "./sell.service";
-import {HealthInsuranceComponent} from "../healthinsurance/health.insurance.component";
+import {HealthInsuranceComponent} from "../healthinsurance/health-insurance.component";
+import {HealthInsuranceCard, Reimbursement} from "../healthinsurance/health-insurance.service";
 
 @Component({
-    selector: 'sell',
-    templateUrl: 'app/com/tiays/pharma/sell/sell.component.html',
-    styleUrls: ['app/com/tiays/pharma/sell/sell.component.css'],
-    providers: [SellService],
-    directives: [HealthInsuranceComponent, ProductComponent, NgFor]
-})
+               selector: 'sell',
+               templateUrl: 'app/com/tiays/pharma/sell/sell.component.html',
+               styleUrls: ['app/com/tiays/pharma/sell/sell.component.css'],
+               providers: [SellService],
+               directives: [HealthInsuranceComponent, ProductComponent, NgFor]
+           })
 export class SellComponent {
     private _cartItems:Map<Product, CartItem> = new Map<Product, CartItem>();
     private _productWithVisibleInfo:Product;
+    private _card:HealthInsuranceCard;
 
     constructor(private _sellService:SellService) {
     }
@@ -41,7 +43,11 @@ export class SellComponent {
         return this._cartItems.values();
     }
 
-    subtotal(cartItem:CartItem) {
+    subtotal(cartItem:CartItem):number {
+        return this._subtotal(cartItem) - this.reimbursement(cartItem);
+    }
+
+    _subtotal(cartItem:CartItem):number {
         return cartItem.product.price * cartItem.quantity;
     }
 
@@ -89,5 +95,28 @@ export class SellComponent {
 
     hasInfo(cartItem:CartItem):boolean {
         return !_.isEmpty(cartItem.product.contraindication);
+    }
+
+    setCard(card:HealthInsuranceCard) {
+        this._card = card;
+    }
+
+    hasCard():boolean {
+        return this._card !== undefined;
+    }
+
+    reimbursementRate(product:Product):number {
+        if (!this.hasCard()) {
+            return 0;
+        }
+        // TODO trouver une implémentation avec any
+        let reimbursement:Reimbursement = this._card.reimbursements.filter((reimbursement) => {
+            return reimbursement.categoryCode === product.categoryCode;
+        })[0];
+        return reimbursement ? reimbursement.rate / 100 : 0;
+    }
+
+    reimbursement(cartItem:CartItem):number {
+        return this._subtotal(cartItem) * this.reimbursementRate(cartItem.product);
     }
 }
