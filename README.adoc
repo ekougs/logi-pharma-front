@@ -1,4 +1,5 @@
 = Logipharma Front App
+:hardbreaks:
 
 == Set up
 Before starting anything listed below you must  
