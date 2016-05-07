@@ -1,8 +1,6 @@
-/// <reference path="../../../../../../typings/main/definitions/lodash/index.d.ts" />
-
-import { Component, EventEmitter, Output } from 'angular2/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import _ = require('lodash');
-import moment from 'moment';
+import moment = require("moment");
 
 import {PolicyHolder, Person, HealthInsuranceService} from './health-insurance.service';
 import {ArrayService} from '../util/array.service';

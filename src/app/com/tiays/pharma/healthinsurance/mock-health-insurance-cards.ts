@@ -1,6 +1,4 @@
-/// <reference path="../../../../../../typings/main/ambient/moment/index.d.ts" />
-
-import moment from "moment";
+import moment = require("moment");
 
 import {HealthInsuranceCard, Person} from "./health-insurance.service";
 

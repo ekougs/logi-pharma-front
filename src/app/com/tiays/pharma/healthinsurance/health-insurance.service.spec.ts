@@ -1,8 +1,5 @@
-///<reference path="../../../../../../node_modules/angular2/ts/typings/jasmine/jasmine.d.ts" />
-/// <reference path="../../../../../../typings/main/ambient/moment/index.d.ts" />
-
-import {it, describe, expect} from 'angular2/testing';
-import moment from 'moment';
+import {it, describe, expect} from '@angular/core/testing';
+import moment = require('moment');
 import Moment = moment.Moment;
 
 import {HealthInsuranceService, PolicyHolder} from './health-insurance.service';

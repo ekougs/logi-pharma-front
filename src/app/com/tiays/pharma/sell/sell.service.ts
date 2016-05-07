@@ -1,4 +1,5 @@
-import {Injectable} from "angular2/core";
+import {Injectable} from "@angular/core";
+
 import {Product} from "../product/product.service";
 
 export interface CartItem {

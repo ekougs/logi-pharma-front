@@ -1,8 +1,4 @@
-///<reference path="../../../../../../node_modules/angular2/typings/es6-promise/es6-promise.d.ts" />
-/// <reference path="../../../../../../typings/main/definitions/lodash/index.d.ts" />
-///<reference path="../../../../../../node_modules/typescript/lib/lib.d.ts" />
-
-import { Component, Output, EventEmitter, Inject } from 'angular2/core';
+import { Component, Output, EventEmitter, Inject } from '@angular/core';
 import _ = require('lodash');
 
 import {ProductService, Product} from "./product.service";

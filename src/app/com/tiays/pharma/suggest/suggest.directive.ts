@@ -1,20 +1,20 @@
 // TODO IMPORTANT replace with material2 implementation when available https://github.com/angular/material2
-import { Component, Input, OnInit, ElementRef, Directive, ViewContainerRef, Injector, provide, Provider,
-    ResolvedProvider, Compiler, Type, Inject, AfterViewChecked, Output, EventEmitter } from 'angular2/core';
-import {CORE_DIRECTIVES, FORM_DIRECTIVES} from "angular2/common";
-import {ListWrapper} from "angular2/src/facade/collection";
+import { Component, Input, OnInit, ElementRef, Directive, ViewContainerRef, provide, Provider,
+    Type, Inject, AfterViewChecked, Output, EventEmitter, ComponentResolver, Injector, ReflectiveInjector,
+    OpaqueToken } from '@angular/core';
+import {CORE_DIRECTIVES, FORM_DIRECTIVES} from "@angular/common";
 import { Observable } from "rxjs/Rx";
 
-const DESCRIPTOR_TOKEN:string = 'suggestComponentElementDescriptor';
-const VIEW_STATE_TOKEN:string = 'suggestComponentViewState';
-const ON_SELECT_TOKEN:string = 'suggestComponentOnSelect';
+const DESCRIPTOR_TOKEN:OpaqueToken = new OpaqueToken('suggestComponentElementDescriptor');
+const VIEW_STATE_TOKEN:OpaqueToken = new OpaqueToken('suggestComponentViewState');
+const ON_SELECT_TOKEN:OpaqueToken = new OpaqueToken('suggestComponentOnSelect');
 
 @Component({
-    selector: 'suggest-view',
-    templateUrl: 'app/com/tiays/pharma/suggest/suggest.component.html',
-    styleUrls: ['app/com/tiays/pharma/suggest/suggest.component.css'],
-    directives: [CORE_DIRECTIVES]
-})
+               selector: 'suggest-view',
+               templateUrl: 'app/com/tiays/pharma/suggest/suggest.component.html',
+               styleUrls: ['app/com/tiays/pharma/suggest/suggest.component.css'],
+               directives: [CORE_DIRECTIVES]
+           })
 class SuggestComponent<T> {
     constructor(@Inject(DESCRIPTOR_TOKEN) private _descriptor:Descriptor<T>,
                 @Inject(VIEW_STATE_TOKEN) private _viewState,
@@ -47,8 +47,8 @@ export interface Descriptor<T> {
 }
 
 @Directive({
-    selector: '[suggest]'
-})
+               selector: '[suggest]'
+           })
 export class SuggestDirective<T> implements OnInit {
 
     private actions = {
@@ -69,7 +69,7 @@ export class SuggestDirective<T> implements OnInit {
     private _highlighted_idx:number = -1;
 
     constructor(private _callingElement:ElementRef, private _viewContainer:ViewContainerRef,
-                private _compiler:Compiler) {
+                private _resolver:ComponentResolver) {
         let nativeCallingElement = _callingElement.nativeElement;
         nativeCallingElement.addEventListener('mousedown', this.show.bind(this));
         nativeCallingElement.addEventListener('focus', this.show.bind(this));
@@ -83,6 +83,7 @@ export class SuggestDirective<T> implements OnInit {
 
     show() {
         this._viewState.visible = true;
+        this._viewState.width = this.getCallingElementWidth();
     }
 
     hide() {
@@ -94,6 +95,11 @@ export class SuggestDirective<T> implements OnInit {
         if (trigger) {
             trigger();
         }
+    }
+
+    resize(e) {
+        console.log("onresize", e);
+        this._viewState.width = this.getCallingElementWidth();
     }
 
     highlightPrevious() {
@@ -154,18 +160,53 @@ export class SuggestDirective<T> implements OnInit {
     }
 
     private render() {
-        this._viewState.width = this._callingElement.nativeElement.offsetWidth;
+        this._viewState.width = this.getCallingElementWidth();
         this._viewState.elements = this.elements;
 
-        this._compiler.compileInHost(<Type>SuggestComponent).then(function (suggestHostViewFactoryRef) {
-            let componentContext:ResolvedProvider[] = this.getComponentContext();
-            this._viewContainer.createHostView(suggestHostViewFactoryRef, undefined, componentContext);
+        this._viewContainer.clear();
+
+        this._resolver.resolveComponent(<Type>SuggestComponent).then(function (suggestFactory) {
+            this._viewContainer.createComponent(suggestFactory, undefined,
+                                                this.getComponentContext(this._viewContainer.injector));
         }.bind(this));
     }
 
-    private getComponentContext() {
-        return Injector.resolve([new Provider(DESCRIPTOR_TOKEN, {useValue: this.descriptor}),
-            new Provider(ON_SELECT_TOKEN, {useValue: this.onSelect.bind(this)}),
-            new Provider(VIEW_STATE_TOKEN, {useValue: this._viewState})]);
+    private getCallingElementWidth() {
+        return this._callingElement.nativeElement.offsetWidth;
     };
+
+    private getComponentContext(injector:Injector):Injector {
+        var reflectiveInjector =
+            ReflectiveInjector.resolveAndCreate([
+                                                    provide(Injector, {useValue: injector}),
+                                                    provide(DESCRIPTOR_TOKEN, {useValue: this.descriptor}),
+                                                    provide(ON_SELECT_TOKEN, {useValue: this.onSelect.bind(this)}),
+                                                    provide(VIEW_STATE_TOKEN, {useValue: this._viewState})
+                                                ]);
+        return new ComposedInjector(injector, reflectiveInjector);
+    };
+}
+
+class ComposedInjector extends Injector {
+    constructor(private _injector1:Injector, private _injector2:Injector) {
+        super();
+    }
+
+    get(token:any, notFoundValue?:any) {
+        var result = undefined;
+        try {
+            result = this._injector1.get(token, notFoundValue);
+        } catch (e) {
+
+        }
+        try {
+            result = this._injector2.get(token, notFoundValue);
+        } catch (e) {
+
+        }
+        if(result === undefined) {
+            throw new Error("No provider for " + token)
+        }
+        return result;
+    }
 }

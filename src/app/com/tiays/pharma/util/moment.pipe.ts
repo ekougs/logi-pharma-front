@@ -1,4 +1,5 @@
-import {Pipe, PipeTransform} from "angular2/core";
+import {Pipe, PipeTransform} from "@angular/core";
+import moment = require("moment");
 import Moment = moment.Moment;
 
 @Pipe({

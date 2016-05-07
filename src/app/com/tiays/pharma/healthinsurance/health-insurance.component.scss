@@ -1,7 +1,23 @@
+@import "../../../../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
 .row {
   margin: 1.5em;
 }
 
 span.glyphicon-remove {
   margin: 0.5em;
+}
+
+div.clickable {
+  margin: 0.5em;
+  display: inline-block;
+  color: $btn-primary-bg;
+}
+
+div.clickable:hover {
+  color: darken($btn-primary-bg, 10%);
+}
+
+div.clickable > span.glyphicon {
+  margin: 0.3em;
 }

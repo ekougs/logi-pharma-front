@@ -1,8 +1,5 @@
-///<reference path="../../../../../../node_modules/angular2/typings/es6-collections/es6-collections.d.ts" />
-/// <reference path="../../../../../../typings/main/definitions/lodash/index.d.ts" />
-
-import {Component, Inject} from 'angular2/core';
-import {NgFor} from "angular2/common";
+import {Component, Inject} from '@angular/core';
+import {NgFor} from "@angular/common";
 import {Observable} from "rxjs/Observable";
 import _ = require('lodash');
 

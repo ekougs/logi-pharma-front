@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "module": "system",
+    "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
     "emitDecoratorMetadata": true,
@@ -10,6 +10,10 @@
     "noImplicitAny": false
   },
   "exclude": [
-    "node_modules", "typings", "dist", "src/app/com/tiays/pharma/declar"
+    "node_modules",
+    "typings/main",
+    "typings/main.d.ts",
+    "dist",
+    "src/app/com/tiays/pharma/declar"
   ]
 }

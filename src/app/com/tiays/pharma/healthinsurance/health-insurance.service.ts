@@ -1,10 +1,4 @@
-///<reference path="../../../../../../typings/main/ambient/moment/index.d.ts" />
-///<reference path="../../../../../../node_modules/angular2/typings/es6-promise/es6-promise.d.ts" />
-///<reference path="../../../../../../node_modules/angular2/typings/es6-collections/es6-collections.d.ts" />
-/// <reference path="../../../../../../typings/main/definitions/lodash/index.d.ts" />
-/// <reference path="../../../../../../typings/main/ambient/crypto-js/index.d.ts" />
-
-import {Injectable} from "angular2/core";
+import {Injectable} from "@angular/core";
 import _ = require('lodash');
 import CryptoJS = require('crypto-js');
 import moment = require('moment');

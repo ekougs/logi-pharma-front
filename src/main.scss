@@ -67,3 +67,12 @@ div.card {
 .clickable:hover {
   cursor: hand;
 }
+
+.flex-group {
+  display: flex;
+  align-items: center;
+}
+
+.form-horizontal .flex-group .control-label {
+  padding-top: 0;
+}
