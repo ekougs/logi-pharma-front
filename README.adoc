@@ -1,4 +1,4 @@
-=Logipharma Front App
+= Logipharma Front App
 
 == Set up
 Before starting anything listed below you must  
