@@ -1,29 +1,14 @@
 @import "mixins";
 
 $icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
+$fa-font-path: "../node_modules/font-awesome/fonts/";
 $body-bg: rgba(245, 245, 245, 0.1);
 
 $box-shadow-default: inset 0 0 0 rgba(0, 0, 0, 0.075), 0 0 0 rgba(102, 175, 233, 0.8);
 $btn-margin: 0.5em;
 
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
-
-fieldset {
-  padding: .35em .625em .75em;
-  margin: 1em 1em 1em 1em;
-  border: 0.2em solid rgba(16, 78, 139, 0.6);
-  border-radius: $border-radius-large;
-}
-
-legend {
-  width: auto;
-  padding-left: 0.3em;
-  padding-right: 0.5em;
-  border: 0;
-  font-size: $font-size-h6;
-  font-weight: bold;
-  color: rgb(16, 78, 139);
-}
+@import "../node_modules/font-awesome/scss/font-awesome";
 
 .form-control-only-bottom {
   border-top-width: 0;
@@ -75,4 +60,13 @@ div.card {
 
 .form-horizontal .flex-group .control-label {
   padding-top: 0;
+}
+
+.fa-circle-o-notch.fa-5x {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -1.5em;
+  margin-left: -1.5em;
+  color: rgb(16, 78, 139);
 }

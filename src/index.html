@@ -15,13 +15,18 @@
     <!-- 2. Configure SystemJS -->
     <script src="./systemjs.config.js"></script>
     <script>
-        System.import('app').catch(function(err){ console.error(err);  });
+        System.import('app').catch(function (err) {
+            console.error(err);
+        });
     </script>
 </head>
 
 <!-- 3. Display the application -->
 <body>
-<pharma-app class="container-fluid">Loading...</pharma-app>
+<pharma-app class="container-fluid">
+    <i class="fa fa-circle-o-notch fa-spin fa-5x fa-fw margin-bottom"></i>
+    <span class="sr-only">Loading...</span>
+</pharma-app>
 </body>
 
 </html>
