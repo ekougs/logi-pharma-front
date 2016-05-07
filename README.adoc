@@ -2,7 +2,6 @@
 :hardbreaks:
 
 == Set up
-Before starting anything listed below you must  
 Install npm (currently using 2.13.0)  
 Run `npm install`
 Install node-sass globally
