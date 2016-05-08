@@ -1,73 +1,91 @@
 module.exports = function (config) {
-    config.set({
-                   basePath: '..',
+    var dependencies = require('../package.json').dependencies;
+    var excludedDependencies = [
+        'systemjs', 'zone.js', 'font-awesome', 'bootswatch'
+    ];
+    var configuration = {
+        basePath: '..',
 
-                   frameworks: ['jasmine', 'requirejs'],
+        frameworks: ['jasmine'],
+        browsers: ['PhantomJS'],
+        reporters: ['progress', 'coverage'],
 
-                   files: [
-                       // paths loaded by Karma
-                       {pattern: 'node_modules/angular2/bundles/angular2-polyfills.js', included: true, watched: true},
-                       {pattern: 'node_modules/systemjs/dist/system.src.js', included: true, watched: true},
-                       {pattern: 'node_modules/rxjs/bundles/Rx.js', included: true, watched: true},
-                       {pattern: 'node_modules/angular2/bundles/angular2.dev.js', included: true, watched: true},
-                       {pattern: 'node_modules/angular2/bundles/testing.dev.js', included: true, watched: true},
-                       {pattern: 'node_modules/fast-levenshtein/levenshtein.js', included: true, watched: true},
-                       {pattern: 'node_modules/lodash/lodash.js', included: true, watched: true},
-                       {pattern: 'node_modules/moment/moment.js', included: true, watched: true},
-                       {pattern: 'node_modules/cryptojs/cryptojs.js', included: true, watched: true},
+        preprocessors: {
+            'src/app/**/!(*.spec)+(.js)': ['coverage'],
+            'src/app/**/*.js': ['sourcemap']
+        },
 
-                       {pattern: 'config/karma-test-shim.js', included: true, watched: true},
+        // Generate json used for remap-istanbul
+        coverageReporter: {
+            dir: 'report/',
+            reporters: [
+                {type: 'json', subdir: 'report-json'}
+            ]
+        },
 
-                       // paths loaded via module imports
-                       {pattern: 'src/**/*.js', included: false},
+        files: [
+            'node_modules/traceur/bin/traceur-runtime.js',
+            // IE required polyfills, in this exact order
+            'node_modules/es6-shim/es6-shim.min.js',
+            'node_modules/zone.js/dist/zone.js',
+            'node_modules/reflect-metadata/Reflect.js',
+            'node_modules/zone.js/dist/async-test.js',
+            'node_modules/zone.js/dist/fake-async-test.js',
+            'node_modules/systemjs/dist/system.src.js',
 
-                       // paths to support debugging with source maps in dev tools
-                       {pattern: 'src/**/*.ts', included: false},
-                       {pattern: 'src/**/*.js.map', included: false}
-                   ],
+            'src/systemjs.config.js',
+            'config/karma-test-shim.js',
 
-                   exclude: [
-                       "src/**/*.e2e.*"
-                   ],
-                   // proxied base paths
-                   proxies: {
-                       // required for component assets fetched by Angular's compiler
-                       '/src/': '/base/src/'
-                   },
+            {pattern: 'src/**/*.js', included: false},
+            {pattern: 'config/angular.test.setup.js', included: false},
 
-                   port: 9876,
+            // paths loaded via Angular's component compiler
+            // (these paths need to be rewritten, see proxies section)
+            {pattern: 'src/**/*.html', included: false},
+            {pattern: 'src/**/*.css', included: false},
 
-                   logLevel: config.LOG_INFO,
+            // paths to support debugging with source maps in dev tools
+            {pattern: 'src/**/*.ts', included: false, watched: false},
+            {pattern: 'src/**/*.js.map', included: false, watched: false}
+        ],
 
-                   colors: true,
+        // proxied base paths
+        proxies: {
+            // required for component assests fetched by Angular's compiler
+            "/config/": "/base/config/",
+            "/app/": "/base/src/app/",
+            "/src/": "/base/src/",
+            "/node_modules/": "/base/node_modules/"
+        },
 
-                   autoWatch: true,
+        exclude: [
+            "src/**/*.e2e.*"
+        ],
 
-                   browsers: ['Chrome'],
+        port: 9876,
+        colors: true,
+        logLevel: config.LOG_INFO,
+        autoWatch: false,
+        singleRun: true
+    };
 
-                   // Karma plugins loaded
-                   plugins: [
-                       'karma-jasmine',
-                       'karma-coverage',
-                       'karma-chrome-launcher',
-                       'karma-requirejs'
-                   ],
+    Object.keys(dependencies).forEach(function (key) {
+        if (excludedDependencies.indexOf(key) >= 0) {
+            return;
+        }
 
-                   // Coverage reporter generates the coverage
-                   reporters: ['progress', 'dots', 'coverage'],
+        configuration.files.push({
+                                     pattern: 'node_modules/' + key + '/**/*.js',
+                                     included: false,
+                                     watched: false
+                                 });
+    });
 
-                   // Source files that you wanna generate coverage for.
-                   // Do not include tests or libraries (these files will be instrumented by Istanbul)
-                   preprocessors: {
-                       'src/**/!(*spec).js': ['coverage']
-                   },
+    if (process.env.APPVEYOR) {
+        configuration.browsers = ['IE'];
+        configuration.singleRun = true;
+        configuration.browserNoActivityTimeout = 90000; // Note: default value (10000) is not enough
+    }
 
-                   coverageReporter: {
-                       reporters: [
-                           {type: 'json', subdir: '.', file: 'coverage-final.json'}
-                       ]
-                   },
-
-                   singleRun: true
-               })
+    config.set(configuration);
 };

@@ -1,6 +1,6 @@
 <template [ngIf]="!selected">
     <policy-holder-autocomplete (onSelectedPolicyHolder)="displayCard($event)"></policy-holder-autocomplete>
-    <div class="clickable" (click)="openPolicyHolderAdditionModal()">
+    <div class="clickable" (click)="cem.show()">
         <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>Ajouter un assuré
     </div>
 </template>
@@ -10,4 +10,4 @@
     </div>
     <health-insurance-card [card]="card" [policyHolder]="policyHolder"></health-insurance-card>
 </template>
-<policy-holder-edit-modal [(show)]="policyHolderModalOpened"></policy-holder-edit-modal>
+<card-edit-modal #cem></card-edit-modal>

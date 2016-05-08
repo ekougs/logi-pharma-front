@@ -5,21 +5,20 @@ import {PolicyHolderAutocompleteComponent} from "./policy-holder.autocomplete.co
 import {HealthInsuranceCardComponent} from "./health-insurance.card.component";
 import {HealthInsuranceService} from "./health-insurance.service";
 import {HealthInsuranceCard} from "./health-insurance.service";
-import {PolicyHolderEditionModalComponent} from "./policy-holder.edition.component";
+import {CardEditionModalComponent} from "./policy-holder.edition.component";
 
 @Component({
                selector: 'health-insurance',
                templateUrl: 'app/com/tiays/pharma/healthinsurance/health-insurance.component.html',
                styleUrls: ['app/com/tiays/pharma/healthinsurance/health-insurance.component.css'],
                providers: [HealthInsuranceService],
-               directives: [PolicyHolderAutocompleteComponent, HealthInsuranceCardComponent, PolicyHolderEditionModalComponent]
+               directives: [PolicyHolderAutocompleteComponent, HealthInsuranceCardComponent, CardEditionModalComponent]
            })
 export class HealthInsuranceComponent {
     private card:HealthInsuranceCard;
     private policyHolder:PolicyHolder;
     private selected:boolean = false;
     @Output() onSelectedCard:EventEmitter<HealthInsuranceCard> = new EventEmitter<HealthInsuranceCard>();
-    private policyHolderModalOpened:boolean = false;
 
     constructor(private _service:HealthInsuranceService) {
     }
@@ -46,9 +45,5 @@ export class HealthInsuranceComponent {
         } else {
             this.onSelectedCard.emit(card);
         }
-    }
-
-    openPolicyHolderAdditionModal() {
-        this.policyHolderModalOpened = true;
     }
 }

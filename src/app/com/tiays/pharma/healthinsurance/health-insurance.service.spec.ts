@@ -47,6 +47,14 @@ describe('Health Insurance Service Tests', function () {
                               .then(done);
     });
 
+    it('should return at least Axa company when asked for Ax', (done) => {
+        healthInsuranceService.getInsuranceCompanies('Ax')
+                              .then((companies) => {
+                                  expect(companies).toContain('Axa');
+                              })
+                              .then(done);
+    });
+
     function policyHolder(name:string, firstName:string, birthDate:string, policyId:string, company:string):PolicyHolder {
         return {
             person: {name: name, firstName: firstName, birthDate: moment(birthDate)},

@@ -62,11 +62,17 @@ div.card {
   padding-top: 0;
 }
 
+.fa-circle-o-notch.fa-5x.absolute-center {
+  margin-top: -1.5em;
+  margin-left: -1.5em;
+}
+
 .fa-circle-o-notch.fa-5x {
+  color: rgb(16, 78, 139);
+}
+
+.absolute-center {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -1.5em;
-  margin-left: -1.5em;
-  color: rgb(16, 78, 139);
 }

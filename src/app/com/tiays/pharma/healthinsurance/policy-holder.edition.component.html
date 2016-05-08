@@ -1,5 +1,5 @@
-<div class="fade" [ngClass]="{'modal-backdrop':_show, in:_show}"></div>
-<div class="modal fade" [ngClass]="{in:_show, show:_show}" tabindex="-1" role="dialog">
+<div class="fade" [ngClass]="{'modal-backdrop':_visible, in:_visible}"></div>
+<div class="modal fade" [ngClass]="{in:_visible, show:_visible}" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -9,10 +9,21 @@
             </div>
             <div class="modal-body form-horizontal">
                 <div class="row">
-                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                        <!-- TODO autocomplete with companies -->
-                    </div>
-                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <div class="row form-group flex-group">
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 align-right">
+                                <label for="policyHolderId">N&deg; assur&eacute;</label>
+                            </div>
+                            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                <input #insuranceCompaniesQuery type="text" id="insuranceCompaniesQuery"
+                                       suggest [observe]="_insuranceCompanies" [descriptor]="_insuranceCompanyDescriptor"
+                                       (onSelectedElement)="selectedInsuranceCompany($event, insuranceCompaniesQuery)"
+                                       class="form-control form-control-only-bottom"
+                                       placeholder="Nom de l&rsquo;assureur"
+                                       [ngModel]="_insuranceCompaniesQuery"
+                                       (ngModelChange)="retrieveInsuranceCompanies($event)">
+                            </div>
+                        </div>
                         <div class="row form-group flex-group">
                             <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 align-right">
                                 <label for="policyHolderId">N&deg; assur&eacute;</label>

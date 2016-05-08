@@ -17,6 +17,8 @@ logipharma-*/
 *.css
 src/app/**/*.js
 src/app/**/*.js.map
+config/**/*.js
+config/**/*.js.map
 
 # Do not ignore tests specs
 !app/**/*.spec.js

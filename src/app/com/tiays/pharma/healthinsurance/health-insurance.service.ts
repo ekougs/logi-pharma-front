@@ -47,6 +47,14 @@ export class HealthInsuranceService {
         });
     }
 
+    getInsuranceCompanies(query:string):Promise<string[]> {
+        return new Promise((resolve) => {
+            setTimeout(()=> {
+                resolve(this.filterCompanies(query, HealthInsuranceService.extractMockCompanies()));
+            }, 500)
+        });
+    }
+
     private static extractMockHolders():PolicyHolder[] {
         return CARDS.map((card) => {
             return card.policyHolders.map((policyHolder) => {
@@ -58,11 +66,21 @@ export class HealthInsuranceService {
         }, []);
     }
 
+    private static extractMockCompanies():string[] {
+        return _.uniqBy(CARDS.map((card) => {
+            return card.company;
+        }), _.identity);
+    }
+
     private filterHolders(query:string, policyHolders:PolicyHolder[]):PolicyHolder[] {
         return this._levenshteinService.matchingItems<PolicyHolder>(query, policyHolders,
                                                                     (pH) => pH.policyId,
                                                                     (pH) => pH.person.name + " " + pH.person.firstName,
                                                                     (pH) => pH.person.firstName + " " + pH.person.name)
+    }
+
+    private filterCompanies(query:string, companies:string[]):string[] {
+        return this._levenshteinService.matchingItems<string>(query, companies, (company) => company)
     }
 
     private static getPolicyHolder(person:Person, card:HealthInsuranceCard):PolicyHolder {
