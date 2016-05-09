@@ -1,0 +1,21 @@
+@import "../../../../../../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+@media (min-width: $screen-md-min) and (max-width: $screen-md-max) {
+  .modal-content {
+    $modal-md-width: 2 * $screen-md-min / 3;
+    width: $modal-md-width;
+    margin-left: -$modal-md-width / 8;
+  }
+}
+
+@media (min-width: $screen-lg-min){
+  .modal-content {
+    $modal-lg-width: 2 * $screen-lg-min / 3;
+    width: $modal-lg-width;
+    margin-left: -($modal-lg-width / 8);
+  }
+}
+
+.bottom-margin {
+  margin-bottom: 1.5em;
+}

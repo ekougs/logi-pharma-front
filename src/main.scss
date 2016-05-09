@@ -4,26 +4,18 @@ $icon-font-path: "../node_modules/bootstrap-sass/assets/fonts/bootstrap/";
 $fa-font-path: "../node_modules/font-awesome/fonts/";
 $body-bg: rgba(245, 245, 245, 0.1);
 
-$box-shadow-default: inset 0 0 0 rgba(0, 0, 0, 0.075), 0 0 0 rgba(102, 175, 233, 0.8);
 $btn-margin: 0.5em;
 
 @import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "../node_modules/font-awesome/scss/font-awesome";
 
 .form-control-only-bottom {
-  border-top-width: 0;
-  border-right-width: 0;
-  border-left-width: 0;
+  @include bottom-only-input();
   padding-right: 0;
-  border-bottom: 1px solid $input-border;
-  @include box-shadow(none);
-  @include border-radius(0);
 }
 
 .form-control-only-bottom:focus {
-  border-bottom-width: 2px;
-  border-color: rgba(16, 78, 139, 0.7);
-  @include box-shadow($box-shadow-default);
+  @include bottom-only-input-focus();
 }
 
 .btn {
@@ -75,4 +67,13 @@ div.card {
   position: absolute;
   top: 50%;
   left: 50%;
+}
+
+.disabled {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+tr.selected {
+  background-color: rgba(16, 78, 139, 0.7);
 }

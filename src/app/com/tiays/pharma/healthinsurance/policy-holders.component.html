@@ -1,0 +1,44 @@
+<table class="table table-striped">
+    <tr>
+        <th *ngIf="edit">
+            <span class="glyphicon glyphicon-plus-sign" (click)="addPolicyHolder()"></span>
+            <span class="glyphicon glyphicon-minus-sign"
+                  [ngClass]="{'disabled':!hasSelectedPolicyHolderForEdition()}"
+                  (click)="removeSelectedPolicyHolder()"></span>
+        </th>
+        <th *ngIf="!edit && hasSeveralPolicyHolders()">
+            <span class="glyphicon glyphicon-plus-sign" [ngClass]="{'not-displayed':!_policyHoldersInvisible}"
+                  (click)="showPolicyHolders()"></span>
+            <span class="glyphicon glyphicon-minus-sign"
+                  [ngClass]="{'not-displayed':_policyHoldersInvisible}" (click)="hidePolicyHolders()"></span>
+        </th>
+        <th>Nom</th>
+        <th>Pr&eacute;noms</th>
+        <th>Date de naissance</th>
+    </tr>
+    <template [ngIf]="!edit">
+        <tr *ngFor="let policyHolder of policyHolders"
+            [ngClass]="{'not-displayed':policyHolderInvisible(policyHolder)}">
+            <td *ngIf="hasSeveralPolicyHolders()"></td>
+            <td>{{ policyHolder.name }}</td>
+            <td>{{ policyHolder.firstName }}</td>
+            <td>{{ policyHolder.birthDate | moment }}</td>
+        </tr>
+    </template>
+    <template [ngIf]="edit">
+        <tr *ngFor="let policyHolder of policyHolders; let idx = index" [ngClass]="{selected: selected(idx)}">
+            <td (click)="toggleSelect(idx)"></td>
+            <td>
+                <input type="text" class="form-control form-control-only-bottom" [(ngModel)]="policyHolder.name"/>
+            </td>
+            <td>
+                <input type="text" class="form-control form-control-only-bottom" [(ngModel)]="policyHolder.firstName"/>
+            </td>
+            <td>
+                <input type="date" class="form-control form-control-only-bottom"
+                       value="{{ policyHolder.birthDate | moment:'YYYY-MM-DD' }}"
+                       (change)="setBirthDate(policyHolder, $event)"/>
+            </td>
+        </tr>
+    </template>
+</table>

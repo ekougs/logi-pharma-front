@@ -7,19 +7,20 @@ import {MomentPipe} from "../util/moment.pipe";
 import {FileService} from "../util/file.service";
 import {HealthInsuranceCard, PolicyHolder, Person} from "./health-insurance.service";
 import {HealthInsuranceService} from "./health-insurance.service";
+import {PolicyHoldersComponent} from "./policy-holders.component";
+import {ReimbursementsComponent} from "./reimbursements.component";
 
 @Component({
                selector: 'health-insurance-card',
                templateUrl: 'app/com/tiays/pharma/healthinsurance/health-insurance.card.component.html',
                styleUrls: ['app/com/tiays/pharma/healthinsurance/health-insurance.card.component.css'],
                providers: [FileService],
+               directives: [PolicyHoldersComponent, ReimbursementsComponent],
                pipes: [MomentPipe]
            })
 export class HealthInsuranceCardComponent implements OnInit {
     @Input() private card:HealthInsuranceCard;
     @Input() private policyHolder:PolicyHolder;
-    private personsInvisible:boolean = true;
-    private reimbursementsInvisible:boolean = true;
     private companyPictureExists:boolean = false;
 
     constructor(private _service:HealthInsuranceService, private _fileService:FileService) {
@@ -35,26 +36,6 @@ export class HealthInsuranceCardComponent implements OnInit {
 
     hasCard():boolean {
         return !_.isEmpty(this.card) && !_.isEmpty(this.policyHolder);
-    }
-
-    personInvisible(person:Person):boolean {
-        return this.policyHolder.person != person && this.personsInvisible;
-    }
-
-    showPersons() {
-        this.personsInvisible = false;
-    }
-
-    hidePersons() {
-        this.personsInvisible = true;
-    }
-
-    showReimbursements() {
-        this.reimbursementsInvisible = false;
-    }
-
-    hideReimbursements() {
-        this.reimbursementsInvisible = true;
     }
 
     getImageURL(company:string):string {

@@ -27,6 +27,11 @@ export interface Reimbursement {
     rate: number;
 }
 
+export interface Category {
+    categoryCode: string;
+    category: string;
+}
+
 export interface PolicyHolder {
     person: Person;
     policyId: string;
@@ -55,6 +60,14 @@ export class HealthInsuranceService {
         });
     }
 
+    getCategories(query:string):Promise<Category[]> {
+        return new Promise((resolve) => {
+            setTimeout(()=> {
+                resolve(this.filterCategories(query, HealthInsuranceService.extractMockCategories()));
+            }, 500)
+        });
+    }
+
     private static extractMockHolders():PolicyHolder[] {
         return CARDS.map((card) => {
             return card.policyHolders.map((policyHolder) => {
@@ -67,9 +80,20 @@ export class HealthInsuranceService {
     }
 
     private static extractMockCompanies():string[] {
-        return _.uniqBy(CARDS.map((card) => {
+        return _.uniq(CARDS.map((card) => {
             return card.company;
-        }), _.identity);
+        }));
+    }
+
+    private static extractMockCategories():Category[] {
+        return _.uniqWith(CARDS.map((card) => {
+            return card.reimbursements.map((reimbursement) => {
+                return {categoryCode: reimbursement.categoryCode, category: reimbursement.category}
+            });
+        }).reduce<Category[]>((categories, categoryArray) => {
+            categoryArray.push(...categories);
+            return categoryArray;
+        }, []), _.isEqual);
     }
 
     private filterHolders(query:string, policyHolders:PolicyHolder[]):PolicyHolder[] {
@@ -81,6 +105,10 @@ export class HealthInsuranceService {
 
     private filterCompanies(query:string, companies:string[]):string[] {
         return this._levenshteinService.matchingItems<string>(query, companies, (company) => company)
+    }
+
+    private filterCategories(query:string, categories:Category[]):Category[] {
+        return this._levenshteinService.matchingItems<Category>(query, categories, (category) => category.category)
     }
 
     private static getPolicyHolder(person:Person, card:HealthInsuranceCard):PolicyHolder {

@@ -1,0 +1,46 @@
+<div *ngIf="!edit">
+<span class="glyphicon glyphicon-plus-sign" [ngClass]="{'not-displayed':!reimbursementsInvisible}"
+      (click)="showReimbursements()"></span>
+<span class="glyphicon glyphicon-minus-sign" [ngClass]="{'not-displayed':reimbursementsInvisible}"
+      (click)="hideReimbursements()"></span>
+</div>
+<table class="table table-striped" [ngClass]="{'not-displayed':!edit && reimbursementsInvisible}">
+    <tr>
+        <th *ngIf="edit">
+            <span class="glyphicon glyphicon-plus-sign" (click)="addReimbursement()"></span>
+            <span class="glyphicon glyphicon-minus-sign"
+                  [ngClass]="{'disabled':!hasSelectedReimbursementForEdition()}"
+                  (click)="removeSelectedReimbursement()"></span>
+        </th>
+        <th>Cat&eacute;gorie</th>
+        <th class="number-cell">Prise en charge</th>
+    </tr>
+    <template [ngIf]="!edit">
+        <tr *ngFor="let reimbursement of reimbursements; let idx = index" [ngClass]="{selected: selected(idx)}">
+            <td>
+                {{ reimbursement.category }}
+            </td>
+            <td>{{ reimbursement.rate }}&#37;</td>
+        </tr>
+    </template>
+    <template [ngIf]="edit">
+        <tr *ngFor="let reimbursement of reimbursements; let idx = index" [ngClass]="{selected: selected(idx)}">
+            <td (click)="toggleSelect(idx)"></td>
+            <td>
+                <input type="text" suggest [observe]="_categories[idx]" [descriptor]="_categoryDescriptor"
+                       (onSelectedElement)="selectedCategory($event, idx)"
+                       class="form-control form-control-only-bottom"
+                       placeholder="Cat&eacute;gorie"
+                       [ngModel]="_categoriesQueries[idx]"
+                       (ngModelChange)="retrieveCategories($event, idx)">
+            </td>
+            <td class="number-cell">
+                <div class="input-group">
+                    <input [(ngModel)]="reimbursement.rate"
+                           type="number" min="0" max="100" class="form-control form-control-only-bottom">
+                    <div class="input-group-addon">&#37;</div>
+                </div>
+            </td>
+        </tr>
+    </template>
+</table>

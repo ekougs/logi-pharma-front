@@ -31,56 +31,15 @@
         <div class="row">
             <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 category-title">Assur&eacute;s</div>
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                <table class="table table-striped">
-                    <tr>
-                        <template [ngIf]="card.policyHolders.length > 1">
-                            <th>
-                            <span class="glyphicon glyphicon-plus-sign" [ngClass]="{'not-displayed':!personsInvisible}"
-                                  (click)="showPersons()"></span>
-                            <span class="glyphicon glyphicon-minus-sign" [ngClass]="{'not-displayed':personsInvisible}"
-                                  (click)="hidePersons()"></span>
-                            </th>
-                        </template>
-                        <th>Nom</th>
-                        <th>Pr&eacute;noms</th>
-                        <th>Date de naissance</th>
-                    </tr>
-                    <template ngFor #policyHolder [ngForOf]="card.policyHolders">
-                        <tr [ngClass]="{'not-displayed':personInvisible(policyHolder)}">
-                            <template [ngIf]="card.policyHolders.length > 1">
-                                <td></td>
-                            </template>
-                            <td>{{ policyHolder.name }}</td>
-                            <td>{{ policyHolder.firstName }}</td>
-                            <td>{{ policyHolder.birthDate | moment }}</td>
-                        </tr>
-                    </template>
-                </table>
+                <policy-holders [selectedPolicyHolder]="policyHolder.person" [policyHolders]="card.policyHolders">
+                </policy-holders>
             </div>
             <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>
         </div>
         <div class="row">
-            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 category-title">Remboursements
-                <div class="pull-right">
-                <span class="glyphicon glyphicon-plus-sign" [ngClass]="{'not-displayed':!reimbursementsInvisible}"
-                      (click)="showReimbursements()"></span>
-                <span class="glyphicon glyphicon-minus-sign" [ngClass]="{'not-displayed':reimbursementsInvisible}"
-                      (click)="hideReimbursements()"></span>
-                </div>
-            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 category-title">Remboursements</div>
             <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                <table class="table table-striped" [ngClass]="{'not-displayed':reimbursementsInvisible}">
-                    <tr>
-                        <th>Cat&eacute;gorie</th>
-                        <th>Prise en charge</th>
-                    </tr>
-                    <template ngFor #reimbursement [ngForOf]="card.reimbursements">
-                        <tr>
-                            <td>{{ reimbursement.category }}</td>
-                            <td>{{ reimbursement.rate }}&#37;</td>
-                        </tr>
-                    </template>
-                </table>
+                <reimbursements [reimbursements]="card.reimbursements"></reimbursements>
             </div>
         </div>
         <div class="row">

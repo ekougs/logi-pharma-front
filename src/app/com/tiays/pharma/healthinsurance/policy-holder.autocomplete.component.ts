@@ -4,7 +4,7 @@ import moment = require("moment");
 
 import {PolicyHolder, Person, HealthInsuranceService} from './health-insurance.service';
 import {ArrayService} from '../util/array.service';
-import {SuggestDirective, Descriptor} from '../suggest/suggest.directive';
+import {SuggestDirective, Descriptor, SuggestEvent} from '../suggest/suggest.directive';
 
 class PolicyHolderDescriptor implements Descriptor<PolicyHolder> {
     represent(policyHolder:PolicyHolder):string {
@@ -43,9 +43,9 @@ export class PolicyHolderAutocompleteComponent {
         });
     }
 
-    reportSelectedPolicyHolder(policyHolder:PolicyHolder, queryInput:HTMLInputElement) {
-        this.onSelectedPolicyHolder.emit(policyHolder);
-        queryInput.value = null;
+    reportSelectedPolicyHolder(event:SuggestEvent<PolicyHolder>) {
+        this.onSelectedPolicyHolder.emit(event.element);
+        event.target.value = null;
         this.resetPolicyHolders();
     }
 

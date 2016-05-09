@@ -1,7 +1,7 @@
 <label class="control-label" for="policyHoldersQuery">Assur&eacute;</label>
-<input #policyHoldersQuery type="text" id="policyHoldersQuery"
+<input type="text" id="policyHoldersQuery"
        suggest [observe]="_policyHolders" [descriptor]="_policyHolderDescriptor"
-       (onSelectedElement)="reportSelectedPolicyHolder($event, policyHoldersQuery)"
+       (onSelectedElement)="reportSelectedPolicyHolder($event)"
        class="form-control form-control-only-bottom"
        placeholder="Num&eacute;ro d&rsquo;assur&eacute; ou Nom pr&eacute;nom de l&rsquo;assur&eacute;"
        [ngModel]="_policyHoldersQuery" (ngModelChange)="retrievePolicyHolders($event)">

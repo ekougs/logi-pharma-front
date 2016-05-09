@@ -55,6 +55,14 @@ describe('Health Insurance Service Tests', function () {
                               .then(done);
     });
 
+    it('should return unique list of categories when', (done) => {
+        healthInsuranceService.getCategories('e')
+                              .then((companies) => {
+                                  expect(companies.map((category) => category.category)).toContain('Soins dentaires', 'Optique', 'Médicaments');
+                              })
+                              .then(done);
+    });
+
     function policyHolder(name:string, firstName:string, birthDate:string, policyId:string, company:string):PolicyHolder {
         return {
             person: {name: name, firstName: firstName, birthDate: moment(birthDate)},

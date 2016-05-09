@@ -46,6 +46,11 @@ export interface Descriptor<T> {
     represent(element:T): string;
 }
 
+export interface SuggestEvent<T> {
+    element:T;
+    target;
+}
+
 @Directive({
                selector: '[suggest]'
            })
@@ -64,7 +69,7 @@ export class SuggestDirective<T> implements OnInit {
 
     @Input('observe') elements:any[];
     @Input('descriptor') descriptor:Descriptor<T>;
-    @Output() onSelectedElement:EventEmitter<T> = new EventEmitter<T>();
+    @Output() onSelectedElement:EventEmitter<SuggestEvent<T>> = new EventEmitter<SuggestEvent<T>>();
     private _viewState = {visible: false, width: 0, highlighted: undefined, elements: []};
     private _highlighted_idx:number = -1;
 
@@ -146,7 +151,7 @@ export class SuggestDirective<T> implements OnInit {
     }
 
     onSelect(element:T) {
-        this.onSelectedElement.emit(element);
+        this.onSelectedElement.emit({element:element, target:this._callingElement.nativeElement});
     }
 
     reset() {

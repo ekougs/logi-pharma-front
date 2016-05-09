@@ -1,4 +1,5 @@
 import {Pipe, PipeTransform} from "@angular/core";
+import _ = require("lodash");
 import moment = require("moment");
 import Moment = moment.Moment;
 
@@ -6,8 +7,11 @@ import Moment = moment.Moment;
           name: "moment"
       })
 export class MomentPipe implements PipeTransform {
-    transform(value:Moment, args:any[]):string {
-        return value.format("DD/MM/YYYY");
+    transform(value:Moment, format:string):string {
+        if(_.isEmpty(format)) {
+            format = "DD/MM/YYYY";
+        }
+        return value.format(format);
     }
 
 }

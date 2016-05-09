@@ -12,7 +12,7 @@ export let CARDS:HealthInsuranceCard[] = [
         company: "Axa",
         expiryDate: moment().add(1, 'y'),
         reimbursements: [
-            {categoryCode: "teeth", category: "Soins dentaire", rate: 75},
+            {categoryCode: "teeth", category: "Soins dentaires", rate: 75},
             {categoryCode: "optical", category: "Optique", rate: 85},
             {categoryCode: "medicine", category: "Médicaments", rate: 95}
         ]
@@ -23,7 +23,7 @@ export let CARDS:HealthInsuranceCard[] = [
         company: "Sunu Assurances",
         expiryDate: moment().subtract(3, 'd'),
         reimbursements: [
-            {categoryCode: "teeth", category: "Soins dentaire", rate: 100},
+            {categoryCode: "teeth", category: "Soins dentaires", rate: 100},
             {categoryCode: "optical", category: "Optique", rate: 100},
             {categoryCode: "medicine", category: "Médicaments", rate: 100}
         ]
@@ -38,7 +38,7 @@ export let CARDS:HealthInsuranceCard[] = [
         company: "Gras Savoye",
         expiryDate: moment(),
         reimbursements: [
-            {categoryCode: "teeth", category: "Soins dentaire", rate: 90},
+            {categoryCode: "teeth", category: "Soins dentaires", rate: 90},
             {categoryCode: "optical", category: "Optique", rate: 100},
             {categoryCode: "medicine", category: "Médicaments", rate: 75}
         ]

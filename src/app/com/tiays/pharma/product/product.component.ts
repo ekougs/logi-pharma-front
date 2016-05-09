@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter, Inject } from '@angular/core';
 import _ = require('lodash');
 
 import {ProductService, Product} from "./product.service";
-import {SuggestDirective, Descriptor} from "../suggest/suggest.directive";
+import {SuggestDirective, Descriptor, SuggestEvent} from "../suggest/suggest.directive";
 import {ArrayService} from "../util/array.service";
 
 class ProductDescriptor implements Descriptor<Product> {
@@ -43,9 +43,9 @@ export class ProductComponent {
         this._arrayService.replaceAll(this._products, ...products);
     }
 
-    selectProduct(product:Product, queryInput:HTMLInputElement) {
-        queryInput.value = null;
-        this.onSelectedProduct.emit(product);
+    selectProduct(event:SuggestEvent<Product>) {
+        event.target.value = null;
+        this.onSelectedProduct.emit(event.element);
         this.resetProducts();
     }
 

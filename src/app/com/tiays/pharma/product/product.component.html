@@ -1,7 +1,7 @@
 <label class="control-label" for="productQuery">Produit</label>
-<input #productQuery type="text" id="productQuery"
+<input type="text" id="productQuery"
        suggest [observe]="_products" [descriptor]="_productDescriptor"
-       (onSelectedElement)="selectProduct($event, productQuery)"
+       (onSelectedElement)="selectProduct($event)"
        class="form-control form-control-only-bottom"
        placeholder="R&eacute;f&eacute;rence ou Libell&eacute;"
        [ngModel]="_query" (ngModelChange)="filterProducts($event)">

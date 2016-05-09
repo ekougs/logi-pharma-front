@@ -1,3 +1,7 @@
+@import "../node_modules/bootstrap-sass/assets/stylesheets/bootstrap/variables";
+
+$box-shadow-default: inset 0 0 0 rgba(0, 0, 0, 0.075), 0 0 0 rgba(102, 175, 233, 0.8);
+
 @mixin box-shadow($shadow) {
   -webkit-box-shadow: $shadow;
   -moz-box-shadow: $shadow;
@@ -34,4 +38,19 @@
 @mixin on-top() {
   z-index: 1;
   position: absolute;
+}
+
+@mixin bottom-only-input() {
+  border-top-width: 0;
+  border-right-width: 0;
+  border-left-width: 0;
+  border-bottom: 1px solid $input-border;
+  @include box-shadow(none);
+  @include border-radius(0);
+}
+
+@mixin bottom-only-input-focus() {
+  border-bottom-width: 2px;
+  border-color: rgba(16, 78, 139, 0.7);
+  @include box-shadow($box-shadow-default);
 }

@@ -8,95 +8,52 @@
                 <h4 class="modal-title">Ajouter un assuré</h4>
             </div>
             <div class="modal-body form-horizontal">
-                <div class="row">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <div class="row form-group flex-group">
-                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 align-right">
-                                <label for="policyHolderId">N&deg; assur&eacute;</label>
-                            </div>
-                            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                                <input #insuranceCompaniesQuery type="text" id="insuranceCompaniesQuery"
-                                       suggest [observe]="_insuranceCompanies" [descriptor]="_insuranceCompanyDescriptor"
-                                       (onSelectedElement)="selectedInsuranceCompany($event, insuranceCompaniesQuery)"
-                                       class="form-control form-control-only-bottom"
-                                       placeholder="Nom de l&rsquo;assureur"
-                                       [ngModel]="_insuranceCompaniesQuery"
-                                       (ngModelChange)="retrieveInsuranceCompanies($event)">
-                            </div>
-                        </div>
-                        <div class="row form-group flex-group">
-                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 align-right">
-                                <label for="policyHolderId">N&deg; assur&eacute;</label>
-                            </div>
-                            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                                <input type="text" id="policyHolderId" class="form-control form-control-only-bottom"/>
-                            </div>
-                        </div>
-                        <div class="row form-group flex-group">
-                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 align-right">
-                                <label for="policyHolderId">Date d&rsquo;expiration</label>
-                            </div>
-                            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
-                                <input type="date" class="form-control form-control-only-bottom">
-                            </div>
-                        </div>
+                <div class="row form-group flex-group">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 align-right">
+                        <label for="insuranceCompaniesQuery">Assureur</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        <input type="text" id="insuranceCompaniesQuery"
+                               suggest [observe]="_insuranceCompanies" [descriptor]="_insuranceCompanyDescriptor"
+                               (onSelectedElement)="selectedInsuranceCompany($event)"
+                               class="form-control form-control-only-bottom"
+                               placeholder="Nom de l&rsquo;assureur"
+                               [ngModel]="_insuranceCompaniesQuery"
+                               (ngModelChange)="retrieveInsuranceCompanies($event)">
                     </div>
                 </div>
-                <!--<div class="row">-->
-                    <!--<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 category-title">Assur&eacute;s</div>-->
-                    <!--<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">-->
-                        <!--<table class="table table-striped">-->
-                            <!--<tr>-->
-                                <!--<template [ngIf]="card.policyHolders.length > 1">-->
-                                    <!--<th>-->
-                            <!--<span class="glyphicon glyphicon-plus-sign" [ngClass]="{'not-displayed':!personsInvisible}"-->
-                                  <!--(click)="showPersons()"></span>-->
-                            <!--<span class="glyphicon glyphicon-minus-sign" [ngClass]="{'not-displayed':personsInvisible}"-->
-                                  <!--(click)="hidePersons()"></span>-->
-                                    <!--</th>-->
-                                <!--</template>-->
-                                <!--<th>Nom</th>-->
-                                <!--<th>Pr&eacute;noms</th>-->
-                                <!--<th>Date de naissance</th>-->
-                            <!--</tr>-->
-                            <!--<template ngFor #policyHolder [ngForOf]="card.policyHolders">-->
-                                <!--<tr [ngClass]="{'not-displayed':personInvisible(policyHolder)}">-->
-                                    <!--<template [ngIf]="card.policyHolders.length > 1">-->
-                                        <!--<td></td>-->
-                                    <!--</template>-->
-                                    <!--<td>{{ policyHolder.name }}</td>-->
-                                    <!--<td>{{ policyHolder.firstName }}</td>-->
-                                    <!--<td>{{ policyHolder.birthDate | moment }}</td>-->
-                                <!--</tr>-->
-                            <!--</template>-->
-                        <!--</table>-->
-                    <!--</div>-->
-                    <!--<div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>-->
-                <!--</div>-->
-                <!--<div class="row">-->
-                    <!--<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 category-title">Remboursements-->
-                        <!--<div class="pull-right">-->
-                <!--<span class="glyphicon glyphicon-plus-sign" [ngClass]="{'not-displayed':!reimbursementsInvisible}"-->
-                      <!--(click)="showReimbursements()"></span>-->
-                <!--<span class="glyphicon glyphicon-minus-sign" [ngClass]="{'not-displayed':reimbursementsInvisible}"-->
-                      <!--(click)="hideReimbursements()"></span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                    <!--<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">-->
-                        <!--<table class="table table-striped" [ngClass]="{'not-displayed':reimbursementsInvisible}">-->
-                            <!--<tr>-->
-                                <!--<th>Cat&eacute;gorie</th>-->
-                                <!--<th>Prise en charge</th>-->
-                            <!--</tr>-->
-                            <!--<template ngFor #reimbursement [ngForOf]="card.reimbursements">-->
-                                <!--<tr>-->
-                                    <!--<td>{{ reimbursement.category }}</td>-->
-                                    <!--<td>{{ reimbursement.rate }}&#37;</td>-->
-                                <!--</tr>-->
-                            <!--</template>-->
-                        <!--</table>-->
-                    <!--</div>-->
-                <!--</div>-->
+                <div class="row form-group flex-group">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 align-right">
+                        <label for="policyHolderId">N&deg; assur&eacute;</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        <input type="text" id="policyHolderId" class="form-control form-control-only-bottom"/>
+                    </div>
+                </div>
+                <div class="row form-group flex-group">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 align-right">
+                        <label for="policyHolderId">Date d&rsquo;expiration</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        <input type="date" class="form-control form-control-only-bottom">
+                    </div>
+                </div>
+                <div class="row bottom-margin">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 align-right">
+                        <label>Assur&eacute;s</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        <policy-holders [edit]="true" [policyHolders]="_policyHolders"></policy-holders>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 align-right">
+                        <label>Remboursements</label>
+                    </div>
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                        <reimbursements [edit]="true" [reimbursements]="_reimbursements"></reimbursements>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" (click)="close()">Annuler</button>

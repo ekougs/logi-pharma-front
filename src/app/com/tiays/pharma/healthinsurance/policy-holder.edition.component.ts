@@ -2,9 +2,11 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import _ = require('lodash');
 import moment = require("moment");
 
-import {Descriptor} from "../suggest/suggest.directive";
-import {HealthInsuranceCard, HealthInsuranceService} from "./health-insurance.service";
+import {Descriptor, SuggestDirective, SuggestEvent} from "../suggest/suggest.directive";
+import {HealthInsuranceCard, HealthInsuranceService, Person} from "./health-insurance.service";
 import {ArrayService} from "../util/array.service";
+import {PolicyHoldersComponent} from "./policy-holders.component";
+import {ReimbursementsComponent} from "./reimbursements.component";
 
 class InsuranceCompanyDescriptor implements Descriptor<String> {
     represent(insuranceCompany:string):string {
@@ -16,7 +18,8 @@ class InsuranceCompanyDescriptor implements Descriptor<String> {
                selector: 'card-edit-modal',
                templateUrl: 'app/com/tiays/pharma/healthinsurance/policy-holder.edition.component.html',
                styleUrls: ['app/com/tiays/pharma/healthinsurance/policy-holder.edition.component.css'],
-               providers: [HealthInsuranceService]
+               providers: [HealthInsuranceService],
+               directives: [SuggestDirective, PolicyHoldersComponent, ReimbursementsComponent]
            })
 export class CardEditionModalComponent {
     private _card:HealthInsuranceCard = {
@@ -29,8 +32,11 @@ export class CardEditionModalComponent {
     private _visible:boolean = false;
     private _insuranceCompanies:string[] = [];
     private _insuranceCompanyDescriptor:InsuranceCompanyDescriptor = new InsuranceCompanyDescriptor();
+    private _policyHolders:Person[] = [];
+    private _reimbursements:Person[] = [];
 
-    constructor(private _service:HealthInsuranceService, private _arrayService:ArrayService){}
+    constructor(private _service:HealthInsuranceService, private _arrayService:ArrayService) {
+    }
 
     public show() {
         this._visible = true;
@@ -46,9 +52,10 @@ export class CardEditionModalComponent {
         });
     }
 
-    selectedInsuranceCompany(insuranceCompany:string, queryInput:HTMLInputElement) {
+    selectedInsuranceCompany(event:SuggestEvent<string>) {
+        let insuranceCompany:string = event.element;
         this._card.company = insuranceCompany;
-        queryInput.value = null;
+        event.target.value = insuranceCompany;
         this.resetInsuranceCompanies();
     }
 
