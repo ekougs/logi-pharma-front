@@ -1,11 +1,13 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, forwardRef, Directive } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/common';
 import _ = require('lodash');
 
 import {Reimbursement, Category, HealthInsuranceService} from "./health-insurance.service";
 import {SuggestDirective, Descriptor, SuggestEvent} from "../suggest/suggest.directive";
 import {ArrayService} from "../util/array.service";
+import {ArrayValidator} from "./array.validator";
 
-const EMPTY_REIMBURSEMENT:Reimbursement = {categoryCode: "", category: "", rate: 100};
+export const EMPTY_REIMBURSEMENT:Reimbursement = {categoryCode: "", category: "", rate: 100};
 
 class CategoryDescriptor implements Descriptor<Category> {
     represent(category:Category):string {
@@ -13,13 +15,19 @@ class CategoryDescriptor implements Descriptor<Category> {
     }
 }
 
+const REIMBURSEMENTS_COMP_VALUE_ACCESSOR = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => ReimbursementsComponent),
+    multi: true
+};
 @Component({
                selector: 'reimbursements',
                templateUrl: 'app/com/tiays/pharma/healthinsurance/reimbursements.component.html',
                styleUrls: ['app/com/tiays/pharma/healthinsurance/reimbursements.component.css'],
+               providers: [REIMBURSEMENTS_COMP_VALUE_ACCESSOR],
                directives: [SuggestDirective]
            })
-export class ReimbursementsComponent {
+export class ReimbursementsComponent implements ControlValueAccessor{
     @Input()
     private reimbursements:Reimbursement[];
     @Input()
@@ -27,56 +35,60 @@ export class ReimbursementsComponent {
 
     private _categoryDescriptor = new CategoryDescriptor();
     private reimbursementsInvisible:boolean = true;
-    private _editSelectedIdx:number = -1;
     private _categoriesQueries:string[] = [];
     private _categories:Category[][] = [];
+    private _onChange:Function = (value) => {
+    };
+    private onTouched:Function = () => {
+    };
 
     constructor(private _service:HealthInsuranceService, private _arrayService:ArrayService) {
     }
 
+    writeValue(reimbursements):void {
+        this.reimbursements = reimbursements ? reimbursements : [];
+    }
+
+    registerOnChange(onChange) {
+        this._onChange = onChange;
+    }
+
+    registerOnTouched(onTouched) {
+        this.onTouched = onTouched;
+    }
+
     showReimbursements() {
+        this.onTouched();
         this.reimbursementsInvisible = false;
     }
 
     hideReimbursements() {
+        this.onTouched();
         this.reimbursementsInvisible = true;
     }
 
-    selected(index:number):boolean {
-        return this._editSelectedIdx === index;
-    }
-
-    toggleSelect(index:number) {
-        if (this._editSelectedIdx === index) {
-            this._editSelectedIdx = -1;
-        } else {
-            this._editSelectedIdx = index;
-        }
-    }
-
-    hasSelectedReimbursementForEdition() {
-        return this._editSelectedIdx !== -1;
-    }
-
-    removeSelectedReimbursement() {
-        if (this.hasSelectedReimbursementForEdition()) {
-            this.reimbursements.splice(this._editSelectedIdx, 1);
-            this._categories.splice(this._editSelectedIdx, 1);
-            this._editSelectedIdx = -1;
-        }
+    remove(reimbursement:Reimbursement) {
+        this.onTouched();
+        _.remove(this.reimbursements, reimbursement);
+        this.onChange();
     }
 
     addReimbursement() {
-        this.reimbursements.push(EMPTY_REIMBURSEMENT);
+        this.onTouched();
+        let newReimbursement = _.cloneDeep(EMPTY_REIMBURSEMENT);
+        this.reimbursements.push(newReimbursement);
         this._categories.push([]);
+        this.onChange();
     }
 
     selectedCategory(event:SuggestEvent<Category>, idx:number) {
+        this.onTouched();
         let category:string = event.element.category;
         this.reimbursements[idx].category = category;
         this.reimbursements[idx].categoryCode = event.element.categoryCode;
         event.target.value = category;
         this.resetCategories(idx);
+        this.onChange();
     }
 
     retrieveCategories(query:string, idx:number) {
@@ -86,6 +98,12 @@ export class ReimbursementsComponent {
     }
 
     private resetCategories(idx:number) {
+        this.onTouched();
         _.remove(this._categories[idx]);
+        this.onChange();
+    }
+
+    private onChange() {
+        this._onChange(this.reimbursements);
     }
 }

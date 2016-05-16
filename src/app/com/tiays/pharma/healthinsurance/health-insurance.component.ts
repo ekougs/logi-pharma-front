@@ -5,7 +5,7 @@ import {PolicyHolderAutocompleteComponent} from "./policy-holder.autocomplete.co
 import {HealthInsuranceCardComponent} from "./health-insurance.card.component";
 import {HealthInsuranceService} from "./health-insurance.service";
 import {HealthInsuranceCard} from "./health-insurance.service";
-import {CardEditionModalComponent} from "./policy-holder.edition.component";
+import {CardEditionModalComponent} from "./card.edition.component";
 
 @Component({
                selector: 'health-insurance',

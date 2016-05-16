@@ -18,6 +18,10 @@ $btn-margin: 0.5em;
   @include bottom-only-input-focus();
 }
 
+.form-control-only-bottom.ng-invalid.ng-dirty {
+  border-bottom: 2px solid $state-danger-text;
+}
+
 .btn {
   span.glyphicon {
     margin-right: $btn-margin;
@@ -74,6 +78,7 @@ div.card {
   pointer-events: none;
 }
 
-tr.selected {
-  background-color: rgba(16, 78, 139, 0.7);
+.error-label.has-error {
+  font-weight: bold;
+  color: $state-danger-text;
 }

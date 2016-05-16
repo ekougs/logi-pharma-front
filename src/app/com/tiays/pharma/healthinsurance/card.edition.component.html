@@ -1,0 +1,103 @@
+<div class="fade" [ngClass]="{'modal-backdrop':_visible, in:_visible}"></div>
+<div class="modal fade" [ngClass]="{in:_visible, show:_visible}" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" aria-label="Close" (click)="close()"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Ajouter un assuré</h4>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form (ngSubmit)="createCard()" [ngFormModel]="_cardForm" #cardForm="ngForm" novalidate>
+                    <div class="row form-group">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 align-right"
+                             [ngClass]="{'has-error': !valid('company')}">
+                            <label class="control-label" for="insuranceCompaniesQuery">Assureur</label>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input type="text" id="insuranceCompaniesQuery"
+                                   suggest [observe]="_insuranceCompanies" [descriptor]="_insuranceCompanyDescriptor"
+                                   (onSelectedElement)="selectedInsuranceCompany($event)"
+                                   class="form-control form-control-only-bottom"
+                                   placeholder="Nom de l&rsquo;assureur"
+                                   [ngModel]="_insuranceCompaniesQuery"
+                                   (ngModelChange)="retrieveInsuranceCompanies($event)"
+                                   ngControl="company">
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 error-label"
+                             [hidden]="valid('company')"
+                             [ngClass]="{'has-error': !valid('company')}">
+                            Obligatoire
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 align-right"
+                             [ngClass]="{'has-error': !valid('policyHolderNumber')}">
+                            <label class="control-label" for="policyHolderId">N&deg; assur&eacute;</label>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input type="text" id="policyHolderId" class="form-control form-control-only-bottom"
+                                   ngControl="policyHolderNumber"/>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 error-label"
+                             [hidden]="valid('policyHolderNumber')"
+                             [ngClass]="{'has-error': !valid('policyHolderNumber')}">
+                            Obligatoire
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 align-right"
+                             [ngClass]="{'has-error': !valid('expiryDate')}">
+                            <label class="control-label" for="policyHolderId">Date d&rsquo;expiration</label>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <input type="date" class="form-control form-control-only-bottom"
+                                   ngControl="expiryDate">
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 error-label"
+                             [hidden]="valid('expiryDate')"
+                             [ngClass]="{'has-error': !valid('expiryDate')}">
+                            Obligatoire
+                        </div>
+                    </div>
+                    <div class="row bottom-margin">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 align-right"
+                             [ngClass]="{'has-error': !valid('policyHolders')}">
+                            <label class="control-label">Assur&eacute;s</label>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <policyHolders [edit]="true" [policyHolders]="_policyHolders"
+                                           ngControl="policyHolders">
+                            </policyHolders>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 error-label"
+                             [hidden]="valid('policyHolders')"
+                             [ngClass]="{'has-error': !valid('policyHolders')}">
+                            Obligatoire
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 align-right"
+                             [ngClass]="{'has-error': !valid('reimbursements')}">
+                            <label class="control-label">Remboursements</label>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <reimbursements [edit]="true" [reimbursements]="_reimbursements"
+                                            ngControl="reimbursements">
+                            </reimbursements>
+                        </div>
+                        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 error-label"
+                             [hidden]="valid('reimbursements')"
+                             [ngClass]="{'has-error': !valid('reimbursements')}">
+                            Obligatoire
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" (click)="close()">Annuler</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!cardForm.form.valid">Ajouter</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

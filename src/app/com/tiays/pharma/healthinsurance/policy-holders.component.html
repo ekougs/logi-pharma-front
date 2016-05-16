@@ -2,9 +2,6 @@
     <tr>
         <th *ngIf="edit">
             <span class="glyphicon glyphicon-plus-sign" (click)="addPolicyHolder()"></span>
-            <span class="glyphicon glyphicon-minus-sign"
-                  [ngClass]="{'disabled':!hasSelectedPolicyHolderForEdition()}"
-                  (click)="removeSelectedPolicyHolder()"></span>
         </th>
         <th *ngIf="!edit && hasSeveralPolicyHolders()">
             <span class="glyphicon glyphicon-plus-sign" [ngClass]="{'not-displayed':!_policyHoldersInvisible}"
@@ -15,6 +12,8 @@
         <th>Nom</th>
         <th>Pr&eacute;noms</th>
         <th>Date de naissance</th>
+        <th *ngIf="edit">
+        </th>
     </tr>
     <template [ngIf]="!edit">
         <tr *ngFor="let policyHolder of policyHolders"
@@ -26,8 +25,8 @@
         </tr>
     </template>
     <template [ngIf]="edit">
-        <tr *ngFor="let policyHolder of policyHolders; let idx = index" [ngClass]="{selected: selected(idx)}">
-            <td (click)="toggleSelect(idx)"></td>
+        <tr *ngFor="let policyHolder of policyHolders; let idx = index">
+            <td></td>
             <td>
                 <input type="text" class="form-control form-control-only-bottom" [(ngModel)]="policyHolder.name"/>
             </td>
@@ -38,6 +37,10 @@
                 <input type="date" class="form-control form-control-only-bottom"
                        value="{{ policyHolder.birthDate | moment:'YYYY-MM-DD' }}"
                        (change)="setBirthDate(policyHolder, $event)"/>
+            </td>
+            <td>
+                <span (click)="remove(policyHolder)" class="glyphicon glyphicon-remove clickable" aria-hidden="true">
+                </span>
             </td>
         </tr>
     </template>

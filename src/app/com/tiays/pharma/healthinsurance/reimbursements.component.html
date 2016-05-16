@@ -8,12 +8,11 @@
     <tr>
         <th *ngIf="edit">
             <span class="glyphicon glyphicon-plus-sign" (click)="addReimbursement()"></span>
-            <span class="glyphicon glyphicon-minus-sign"
-                  [ngClass]="{'disabled':!hasSelectedReimbursementForEdition()}"
-                  (click)="removeSelectedReimbursement()"></span>
         </th>
         <th>Cat&eacute;gorie</th>
         <th class="number-cell">Prise en charge</th>
+        <th *ngIf="edit">
+        </th>
     </tr>
     <template [ngIf]="!edit">
         <tr *ngFor="let reimbursement of reimbursements; let idx = index" [ngClass]="{selected: selected(idx)}">
@@ -24,22 +23,26 @@
         </tr>
     </template>
     <template [ngIf]="edit">
-        <tr *ngFor="let reimbursement of reimbursements; let idx = index" [ngClass]="{selected: selected(idx)}">
-            <td (click)="toggleSelect(idx)"></td>
+        <tr *ngFor="let reimbursement of reimbursements; let idx = index">
+            <td></td>
             <td>
                 <input type="text" suggest [observe]="_categories[idx]" [descriptor]="_categoryDescriptor"
                        (onSelectedElement)="selectedCategory($event, idx)"
                        class="form-control form-control-only-bottom"
                        placeholder="Cat&eacute;gorie"
                        [ngModel]="_categoriesQueries[idx]"
-                       (ngModelChange)="retrieveCategories($event, idx)">
+                       (ngModelChange)="retrieveCategories($event, idx); onChange()">
             </td>
             <td class="number-cell">
                 <div class="input-group">
-                    <input [(ngModel)]="reimbursement.rate"
+                    <input [(ngModel)]="reimbursement.rate" (change)="onChange()"
                            type="number" min="0" max="100" class="form-control form-control-only-bottom">
                     <div class="input-group-addon">&#37;</div>
                 </div>
+            </td>
+            <td>
+                <span (click)="remove(reimbursement)" class="glyphicon glyphicon-remove clickable" aria-hidden="true">
+                </span>
             </td>
         </tr>
     </template>

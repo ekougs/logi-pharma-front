@@ -106,10 +106,11 @@ export class SellComponent {
         if (!this.hasCard()) {
             return 0;
         }
-        // TODO trouver une implémentation avec any
-        let reimbursement:Reimbursement = this._card.reimbursements.filter((reimbursement) => {
+        var reimbursements = this._card.reimbursements;
+        var idx = _.findIndex(reimbursements, (reimbursement) => {
             return reimbursement.categoryCode === product.categoryCode;
-        })[0];
+        });
+        let reimbursement:Reimbursement = reimbursements[idx];
         return reimbursement ? reimbursement.rate / 100 : 0;
     }
 

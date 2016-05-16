@@ -1,3 +1,5 @@
+@import "small-tables.scss";
+
 div.card, div img {
   padding: 0.5em;
 }
@@ -26,4 +28,8 @@ div.card.expired {
   background-color: rgba(255, 0, 0, 0.1);
   color: inherit;
   font-weight: inherit;
+}
+
+:host /deep/ {
+  @include small-tables();
 }

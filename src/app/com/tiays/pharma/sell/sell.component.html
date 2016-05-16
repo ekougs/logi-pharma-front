@@ -27,38 +27,37 @@
                     <th>Sous-Total</th>
                     <th></th>
                 </tr>
-                <template ngFor #cartItem [ngForOf]="cartItems()">
-                    <tr>
-                        <td>{{cartItem.product.code}}</td>
-                        <td>{{cartItem.product.label}}</td>
-                        <td class="pull-right">{{cartItem.product.price}}</td>
-                        <td>
-                            <input type="number" min="1" max="{{cartItem.product.stock}}"
-                                   class="form-control .input-sm quantity form-control-only-bottom"
-                                   [(ngModel)]="cartItem.quantity">
-                        </td>
-                        <td [ngClass]="{'not-displayed':!hasCard()}">
-                            {{ reimbursementRate(cartItem.product) * 100 }}&#37;
-                        </td>
-                        <td [ngClass]="{'not-displayed':!hasCard()}">{{ reimbursement(cartItem) }}</td>
-                        <td class="pull-right">{{ subtotal(cartItem) }}</td>
-                        <td>
-                            <span (click)="toggleInfo(cartItem)"
-                                  [ngClass]="{clickable:hasInfo(cartItem), disabled:!hasInfo(cartItem)}"
-                                  class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>
-                            <template [ngIf]="hasInfo(cartItem)">
+                <tr *ngFor="let cartItem of cartItems()">
+                    <td>{{cartItem.product.code}}</td>
+                    <td>{{cartItem.product.label}}</td>
+                    <td class="pull-right">{{cartItem.product.price}}</td>
+                    <td>
+                        <input type="number" min="1" max="{{cartItem.product.stock}}"
+                               class="form-control .input-sm quantity form-control-only-bottom"
+                               [(ngModel)]="cartItem.quantity">
+                    </td>
+                    <td [ngClass]="{'not-displayed':!hasCard()}">
+                        {{ reimbursementRate(cartItem.product) * 100 }}&#37;
+                    </td>
+                    <td [ngClass]="{'not-displayed':!hasCard()}">{{ reimbursement(cartItem) }}</td>
+                    <td class="pull-right">{{ subtotal(cartItem) }}</td>
+                    <td>
+                        <span (click)="toggleInfo(cartItem)"
+                              [ngClass]="{clickable:hasInfo(cartItem), disabled:!hasInfo(cartItem)}"
+                              class="glyphicon glyphicon-info-sign" aria-hidden="true">
+                        </span>
+                        <template [ngIf]="hasInfo(cartItem)">
                                 <span [ngClass]="{show:info(cartItem).visible, hide:!info(cartItem).visible}"
                                       (click)="toggleInfo(cartItem)"
                                       class="info bg-primary">
                                     {{ info(cartItem).text }}
                                 </span>
-                            </template>
-                            <span (click)="removeItem(cartItem)"
-                                  class="glyphicon glyphicon-remove clickable" aria-hidden="true">
-                            </span>
-                        </td>
-                    </tr>
-                </template>
+                        </template>
+                        <span (click)="removeItem(cartItem)"
+                              class="glyphicon glyphicon-remove clickable" aria-hidden="true">
+                        </span>
+                    </td>
+                </tr>
             </table>
         </div>
         <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1"></div>

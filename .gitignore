@@ -3,6 +3,7 @@ node_modules
 npm-debug.log
 typings
 coverage
+report
 
 # Build
 dist

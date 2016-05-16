@@ -1,27 +1,7 @@
 @import "../../../../../mixins";
 
-th, td {
-  min-width: 4em;
-}
-
-.glyphicon {
-  font-size: 0.8em;
-}
-
-.number-cell {
-  width: 9em;
-}
-
-table.table {
-  margin-top: 0;
-  margin-bottom: 0;
-  font-size: 0.8em;
-}
-
 .table div.input-group-addon {
   @include bottom-only-input();
-  font-size: 1em;
-  height: 1em;
   padding: 0.2em 0.2em 0;
   border-bottom-right-radius: 2px;
   border-top-right-radius: 2px;
@@ -29,13 +9,4 @@ table.table {
 
 .form-control-only-bottom:focus {
   @include bottom-only-input-focus();
-}
-
-.table input.form-control-only-bottom {
-  line-height: 1em;
-  font-size: 1em;
-  padding-left: 0.2em;
-  padding-top: 0.1em;
-  padding-bottom: 0.1em;
-  height: 2.2em;
 }

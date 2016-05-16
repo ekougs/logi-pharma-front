@@ -1,0 +1,35 @@
+@mixin small-tables() {
+  .glyphicon {
+    font-size: 0.8em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+  }
+
+  .number-cell {
+    width: 9em;
+  }
+
+  table.table {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 0.8em;
+  }
+
+  .table div.input-group-addon {
+    font-size: 1em;
+    height: 1em;
+  }
+
+  .table input.form-control-only-bottom {
+    line-height: 1em;
+    font-size: 1em;
+    padding-left: 0.2em;
+    padding-top: 0.1em;
+    padding-bottom: 0.1em;
+    height: 2.2em;
+  }
+
+  td span.glyphicon-remove {
+    font-size: 1.3em;
+  }
+}

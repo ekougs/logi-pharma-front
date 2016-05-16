@@ -103,7 +103,6 @@ export class SuggestDirective<T> implements OnInit {
     }
 
     resize(e) {
-        console.log("onresize", e);
         this._viewState.width = this.getCallingElementWidth();
     }
 
@@ -128,8 +127,7 @@ export class SuggestDirective<T> implements OnInit {
         if (this.noHighlightedElement()) {
             this._highlighted_idx = 0;
         } else {
-            this._viewState.highlighted[this._highlighted_idx] = false;
-            if (this._highlighted_idx == idxBeforeRestart) {
+            if (this._highlighted_idx === idxBeforeRestart) {
                 this._highlighted_idx = idxAfterRestart;
             } else {
                 operation()
